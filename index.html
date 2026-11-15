@@ -1,57 +1,60 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SabziKart Admin</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#f3f7f3;font-family:Arial;color:#222}
-header{background:#16833b;color:white;padding:18px;text-align:center;font-size:23px;font-weight:bold}
-.box{max-width:650px;margin:20px auto;background:white;padding:18px;border-radius:15px}
-input,button{width:100%;padding:12px;margin:7px 0;border:1px solid #ddd;border-radius:8px;font-size:15px}
-button{background:#16833b;color:white;border:0;font-weight:bold}
-.red{background:#c62828}
+body{margin:0;background:#f5f8f5;font-family:Arial,sans-serif;color:#202820}
+header{background:#12833b;color:white;padding:19px;text-align:center;font-size:24px;font-weight:bold}
+.box{max-width:720px;margin:18px auto;background:white;padding:17px;border-radius:16px}
+input,button{font-size:15px;padding:12px;border-radius:9px;border:1px solid #ddd}
+input{width:100%;margin:6px 0}
+button{background:#16833b;color:white;border:0;font-weight:bold;cursor:pointer}
+.red{background:#d32f2f}
 .gray{background:#555}
 #dashboard{display:none}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.card{background:white;border:1px solid #e3e3e3;border-radius:12px;padding:10px;box-shadow:0 2px 6px #ddd;min-width:0}
-.card img{width:100%;height:120px;object-fit:cover;border-radius:8px;background:#eee}
-.card h3{font-size:15px;margin:9px 0 5px}
-.price{font-weight:bold;color:#16833b;font-size:17px}
-.status{font-size:12px;color:#16833b}
-.quantity{display:flex;align-items:center;justify-content:center;gap:12px;margin:8px 0}
-.quantity button{width:34px;height:34px;padding:0;margin:0;font-size:20px;border-radius:8px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.card{background:#fff;border:1px solid #e8eee8;border-radius:15px;padding:10px;box-shadow:0 3px 12px #172b1710;min-width:0}
+.photo{width:100%;height:135px;object-fit:contain;background:#fff;border-radius:10px}
+.card h3{font-size:15px;margin:9px 0 5px;min-height:34px}
+.price{font-size:18px;color:#12833b;font-weight:bold}
+.status{font-size:12px;margin:7px 0;color:#12833b}
+.quantity{display:flex;align-items:center;justify-content:center;gap:13px;margin:10px 0}
+.quantity button{width:34px;height:34px;padding:0;font-size:21px}
 .quantity span{font-weight:bold;min-width:20px;text-align:center}
-.actions{display:flex;gap:5px;flex-wrap:wrap}
-.actions button{width:auto;flex:1;padding:8px 4px;margin:3px 0;font-size:11px}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.actions button{font-size:11px;padding:9px 3px;margin:0}
+.actions .red{grid-column:span 2}
+h2{font-size:19px}
 #message,#status{overflow-wrap:anywhere}
-@media(max-width:340px){.grid{grid-template-columns:1fr}}
+@media(max-width:350px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<header>🥬 SabziKart Admin</header>
+<header>🥬 SabziKart</header>
 
 <div class="box" id="loginBox">
 <h2>Admin Login</h2>
 <input id="email" type="email" placeholder="Admin Email">
 <input id="password" type="password" placeholder="Password">
-<button id="login">Login</button>
+<button id="login" style="width:100%">Login</button>
 <p id="message"></p>
 </div>
 
 <div class="box" id="dashboard">
-<h2>➕ Add Vegetable</h2>
+<h2>➕ Add New Vegetable</h2>
 <input id="vegName" placeholder="Vegetable Name">
 <input id="vegPrice" type="number" placeholder="Price per kg">
 <input id="vegImage" placeholder="Photo URL (optional)">
-<button id="addVeg">Add Vegetable</button>
+<button id="addVeg" style="width:100%">+ Add Vegetable</button>
 <p id="status"></p>
 <hr>
 <h2>🛒 Vegetable Collection</h2>
 <div class="grid" id="vegList">Loading...</div>
-<button class="red" id="logout">Logout</button>
+<button class="red" id="logout" style="width:100%;margin-top:18px">Logout</button>
 </div>
 
 <script type="module">
@@ -75,20 +78,67 @@ const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);
 const db=getFirestore(app);
 
+const photos={
+potato:"https://sunagriindustries.com/wp-content/uploads/2026/01/Potato-300X300.jpeg",
+tomato:"https://sunagriindustries.com/wp-content/uploads/2026/01/Tomato-300X300-2.jpg",
+onion:"https://sunagriindustries.com/wp-content/uploads/2026/01/Onion-300X300.jpg",
+cauliflower:"https://sunagriindustries.com/wp-content/uploads/2026/01/Cauliflower-300X300.jpg",
+cabbage:"https://sunagriindustries.com/wp-content/uploads/2026/01/Cabbage-300X300.jpg",
+brinjal:"https://sunagriindustries.com/wp-content/uploads/2026/01/Brinjal-300X300.jpg",
+bhindi:"https://sunagriindustries.com/wp-content/uploads/2026/01/Okra-300X300.jpg",
+okra:"https://sunagriindustries.com/wp-content/uploads/2026/01/Okra-300X300.jpg",
+peas:"https://sunagriindustries.com/wp-content/uploads/2026/01/Peas-300X300.jpg",
+beans:"https://sunagriindustries.com/wp-content/uploads/2026/01/Beans-300X300.jpg",
+spinach:"https://sunagriindustries.com/wp-content/uploads/2026/01/Spinach-300X300.jpeg",
+carrot:"https://sunagriindustries.com/wp-content/uploads/2026/01/Carrot-300X300.jpg",
+radish:"https://sunagriindustries.com/wp-content/uploads/2026/01/Radish-300x300-1.jpg",
+beetroot:"https://sunagriindustries.com/wp-content/uploads/2026/01/Beetroot-300X300.jpeg",
+pumpkin:"https://sunagriindustries.com/wp-content/uploads/2026/01/Pumpkin-300X300.jpg",
+karela:"https://sunagriindustries.com/wp-content/uploads/2026/01/Bitter-Gourd-300X300.jpg",
+lauki:"https://sunagriindustries.com/wp-content/uploads/2026/01/Bottle-Gourd-300X300.jpg",
+drumstick:"https://sunagriindustries.com/wp-content/uploads/2026/01/Drumstick-300X300-2.jpg",
+cucumber:"https://sunagriindustries.com/wp-content/uploads/2026/01/Cucumber-300X300.jpg",
+chilli:"https://sunagriindustries.com/wp-content/uploads/2026/01/Green-Chillies-300X300.jpg",
+garlic:"https://sunagriindustries.com/wp-content/uploads/2026/01/Garlic-300X300-1.jpg",
+turai:"https://sunagriindustries.com/wp-content/uploads/2026/01/Ridge-Gourd-300X300.jpg"
+};
+
+function getPhoto(item,v){
+if(v.image && v.image.trim())return v.image;
+const s=(item.id+" "+(v.name||"")).toLowerCase();
+const aliases=[
+["potato",["potato","aloo","आलू","બટાકા"]],
+["tomato",["tomato","tamatar","टमाटर","ટામેટા"]],
+["onion",["onion","pyaz","pyaaz","प्याज","ડુંગળી"]],
+["cauliflower",["cauliflower","phool gobhi","फूलगोभी","ફૂલકોબી"]],
+["cabbage",["cabbage","patta gobhi","पत्तागोभी","કોબી"]],
+["brinjal",["brinjal","baingan","बैंगन","રીંગણ"]],
+["bhindi",["bhindi","okra","lady finger","भिंडी","ભીંડા"]],
+["peas",["peas","matar","मटर","વટાણા"]],
+["beans",["beans","sem","सेम","ફણસી"]],
+["spinach",["spinach","palak","पालक","પાલક"]],
+["carrot",["carrot","gajar","गाजर","ગાજર"]],
+["radish",["radish","mooli","मूली","મૂળા"]],
+["beetroot",["beetroot","chukandar","चुकंदर","બીટ"]],
+["pumpkin",["pumpkin","kaddu","कद्दू","કોળું"]],
+["karela",["karela","bitter gourd","करेला","કારેલા"]],
+["lauki",["lauki","bottle gourd","दूधी","लौकी","દૂધી"]],
+["drumstick",["drumstick","sahjan","सहजन","સરગવો"]],
+["cucumber",["cucumber","kheera","खीरा","કાકડી"]],
+["chilli",["chilli","mirchi","मिर्च","મરચાં"]],
+["garlic",["garlic","lahsun","लहसुन","લસણ"]],
+["turai",["turai","ridge gourd","तुरई","તુરીયા"]]
+];
+for(const [key,words] of aliases){
+if(words.some(w=>s.includes(w)))return photos[key];
+}
+return "";
+}
+
 const loginBox=document.getElementById("loginBox");
 const dashboard=document.getElementById("dashboard");
 const status=document.getElementById("status");
 const vegList=document.getElementById("vegList");
-
-const photos={
-potato:"https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=500",
-tomato:"https://images.unsplash.com/photo-1546094096-0df4bcaaa337?w=500",
-onion:"https://images.unsplash.com/photo-1508747703725-719777637510?w=500",
-cauliflower:"https://images.unsplash.com/photo-1568584711075-3d021a7c3b59?w=500",
-bhindi:"https://images.unsplash.com/photo-1604977042946-1eecc30f269e?w=500",
-brinjal:"https://images.unsplash.com/photo-1659261200835-1b8d5c1c8e2b?w=500",
-lauki:"https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=500"
-};
 
 document.getElementById("login").onclick=async()=>{
 try{
@@ -112,18 +162,19 @@ const card=document.createElement("div");
 card.className="card";
 
 const img=document.createElement("img");
-img.src=v.image || photos[item.id] || "";
-img.alt=v.name || item.id;
-img.onerror=()=>{
+img.className="photo";
+img.src=getPhoto(item,v);
+img.alt=v.name||item.id;
+if(!img.src || img.src===location.href){
 img.style.display="none";
-};
+}
 
 const name=document.createElement("h3");
-name.textContent=v.name || item.id;
+name.textContent=v.name||item.id;
 
 const price=document.createElement("div");
 price.className="price";
-price.textContent="₹"+(v.price ?? 0)+" / kg";
+price.textContent="₹"+(v.price??0)+" / kg";
 
 const availability=document.createElement("p");
 availability.className="status";
@@ -158,16 +209,16 @@ actions.className="actions";
 const update=document.createElement("button");
 update.textContent="Edit Price";
 update.onclick=async()=>{
-const answer=prompt("Naya price per kg likho:",v.price);
+const answer=prompt("Naya price per kg:",v.price);
 if(answer===null)return;
 const p=Number(answer);
-if(answer.trim()==="" || !Number.isFinite(p) || p<0){
+if(answer.trim()===""||!Number.isFinite(p)||p<0){
 alert("Sahi price likho");
 return;
 }
 try{
 await updateDoc(doc(db,"vegetables",item.id),{price:p});
-status.textContent="Price updated";
+status.textContent="Price updated!";
 loadVegetables();
 }catch(e){status.textContent=e.code+": "+e.message;}
 };
@@ -186,7 +237,7 @@ const remove=document.createElement("button");
 remove.className="red";
 remove.textContent="Delete";
 remove.onclick=async()=>{
-if(confirm("Delete this vegetable?")){
+if(confirm("Kya ye sabzi delete karni hai?")){
 try{
 await deleteDoc(doc(db,"vegetables",item.id));
 loadVegetables();
@@ -205,7 +256,7 @@ try{
 const snap=await getDocs(collection(db,"vegetables"));
 vegList.innerHTML="";
 if(snap.empty){
-vegList.textContent="No vegetables found";
+vegList.textContent="Abhi koi sabzi nahi hai";
 return;
 }
 snap.forEach(item=>vegList.appendChild(makeCard(item)));
@@ -220,11 +271,10 @@ const priceText=document.getElementById("vegPrice").value;
 const price=Number(priceText);
 const image=document.getElementById("vegImage").value.trim();
 
-if(!name || priceText==="" || !Number.isFinite(price) || price<0){
-status.textContent="Name aur sahi price bharo";
+if(!name||priceText===""||!Number.isFinite(price)||price<0){
+status.textContent="Naam aur sahi price bharo";
 return;
 }
-
 try{
 await addDoc(collection(db,"vegetables"),{
 name,price,image,available:true
@@ -232,7 +282,7 @@ name,price,image,available:true
 document.getElementById("vegName").value="";
 document.getElementById("vegPrice").value="";
 document.getElementById("vegImage").value="";
-status.textContent="Vegetable added!";
+status.textContent="Sabzi add ho gayi!";
 loadVegetables();
 }catch(e){
 status.textContent=e.code+": "+e.message;
