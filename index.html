@@ -7,7 +7,7 @@
 <title>SabziKart Admin</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#f3f7f3;font-family:Arial,sans-serif;color:#222}
+body{margin:0;background:#f3f7f3;font-family:Arial;color:#222}
 header{background:#16833b;color:white;padding:18px;text-align:center;font-size:23px;font-weight:bold}
 .box{max-width:650px;margin:20px auto;background:white;padding:18px;border-radius:15px}
 input,button{width:100%;padding:12px;margin:7px 0;border:1px solid #ddd;border-radius:8px;font-size:15px}
@@ -17,11 +17,15 @@ button{background:#16833b;color:white;border:0;font-weight:bold}
 #dashboard{display:none}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .card{background:white;border:1px solid #e3e3e3;border-radius:12px;padding:10px;box-shadow:0 2px 6px #ddd;min-width:0}
-.card img{width:100%;height:125px;object-fit:cover;border-radius:8px;background:#eee}
-.card h3{font-size:16px;margin:10px 0 5px}
+.card img{width:100%;height:120px;object-fit:cover;border-radius:8px;background:#eee}
+.card h3{font-size:15px;margin:9px 0 5px}
 .price{font-weight:bold;color:#16833b;font-size:17px}
-.status{font-size:13px;color:#16833b}
-.card button{font-size:13px;padding:10px 5px}
+.status{font-size:12px;color:#16833b}
+.quantity{display:flex;align-items:center;justify-content:center;gap:12px;margin:8px 0}
+.quantity button{width:34px;height:34px;padding:0;margin:0;font-size:20px;border-radius:8px}
+.quantity span{font-weight:bold;min-width:20px;text-align:center}
+.actions{display:flex;gap:5px;flex-wrap:wrap}
+.actions button{width:auto;flex:1;padding:8px 4px;margin:3px 0;font-size:11px}
 #message,#status{overflow-wrap:anywhere}
 @media(max-width:340px){.grid{grid-template-columns:1fr}}
 </style>
@@ -76,12 +80,24 @@ const dashboard=document.getElementById("dashboard");
 const status=document.getElementById("status");
 const vegList=document.getElementById("vegList");
 
+const photos={
+potato:"https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=500",
+tomato:"https://images.unsplash.com/photo-1546094096-0df4bcaaa337?w=500",
+onion:"https://images.unsplash.com/photo-1508747703725-719777637510?w=500",
+cauliflower:"https://images.unsplash.com/photo-1568584711075-3d021a7c3b59?w=500",
+bhindi:"https://images.unsplash.com/photo-1604977042946-1eecc30f269e?w=500",
+brinjal:"https://images.unsplash.com/photo-1659261200835-1b8d5c1c8e2b?w=500",
+lauki:"https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=500"
+};
+
 document.getElementById("login").onclick=async()=>{
 try{
 await signInWithEmailAndPassword(auth,
 document.getElementById("email").value.trim(),
 document.getElementById("password").value);
-}catch(e){document.getElementById("message").textContent=e.code+": "+e.message;}
+}catch(e){
+document.getElementById("message").textContent=e.code+": "+e.message;
+}
 };
 
 onAuthStateChanged(auth,user=>{
@@ -96,9 +112,11 @@ const card=document.createElement("div");
 card.className="card";
 
 const img=document.createElement("img");
-img.src=v.image || "https://placehold.co/300x200/e8f5e9/16833b?text=Fresh+Vegetable";
+img.src=v.image || photos[item.id] || "";
 img.alt=v.name || item.id;
-img.onerror=()=>{img.src="https://placehold.co/300x200/e8f5e9/16833b?text=Vegetable";};
+img.onerror=()=>{
+img.style.display="none";
+};
 
 const name=document.createElement("h3");
 name.textContent=v.name || item.id;
@@ -112,25 +130,56 @@ availability.className="status";
 availability.textContent=v.available?"● Available":"● Unavailable";
 availability.style.color=v.available?"#16833b":"#c62828";
 
-const priceInput=document.createElement("input");
-priceInput.type="number";
-priceInput.placeholder="New price";
+let quantity=1;
+const qty=document.createElement("div");
+qty.className="quantity";
+
+const minus=document.createElement("button");
+minus.textContent="−";
+const count=document.createElement("span");
+count.textContent=quantity;
+const plus=document.createElement("button");
+plus.textContent="+";
+
+minus.onclick=()=>{
+if(quantity>1)quantity--;
+count.textContent=quantity;
+};
+plus.onclick=()=>{
+quantity++;
+count.textContent=quantity;
+};
+
+qty.append(minus,count,plus);
+
+const actions=document.createElement("div");
+actions.className="actions";
 
 const update=document.createElement("button");
-update.textContent="Update Price";
+update.textContent="Edit Price";
 update.onclick=async()=>{
-const p=Number(priceInput.value);
-if(priceInput.value==="" || !Number.isFinite(p) || p<0){alert("Sahi price likho");return;}
-try{await updateDoc(doc(db,"vegetables",item.id),{price:p});status.textContent="Price updated";loadVegetables();}
-catch(e){status.textContent=e.code+": "+e.message;}
+const answer=prompt("Naya price per kg likho:",v.price);
+if(answer===null)return;
+const p=Number(answer);
+if(answer.trim()==="" || !Number.isFinite(p) || p<0){
+alert("Sahi price likho");
+return;
+}
+try{
+await updateDoc(doc(db,"vegetables",item.id),{price:p});
+status.textContent="Price updated";
+loadVegetables();
+}catch(e){status.textContent=e.code+": "+e.message;}
 };
 
 const toggle=document.createElement("button");
 toggle.className="gray";
-toggle.textContent=v.available?"Make Unavailable":"Make Available";
+toggle.textContent=v.available?"Unavailable":"Available";
 toggle.onclick=async()=>{
-try{await updateDoc(doc(db,"vegetables",item.id),{available:!v.available});loadVegetables();}
-catch(e){status.textContent=e.code+": "+e.message;}
+try{
+await updateDoc(doc(db,"vegetables",item.id),{available:!v.available});
+loadVegetables();
+}catch(e){status.textContent=e.code+": "+e.message;}
 };
 
 const remove=document.createElement("button");
@@ -138,12 +187,15 @@ remove.className="red";
 remove.textContent="Delete";
 remove.onclick=async()=>{
 if(confirm("Delete this vegetable?")){
-try{await deleteDoc(doc(db,"vegetables",item.id));loadVegetables();}
-catch(e){status.textContent=e.code+": "+e.message;}
+try{
+await deleteDoc(doc(db,"vegetables",item.id));
+loadVegetables();
+}catch(e){status.textContent=e.code+": "+e.message;}
 }
 };
 
-card.append(img,name,price,availability,priceInput,update,toggle,remove);
+actions.append(update,toggle,remove);
+card.append(img,name,price,availability,qty,actions);
 return card;
 }
 
@@ -152,9 +204,14 @@ vegList.textContent="Loading...";
 try{
 const snap=await getDocs(collection(db,"vegetables"));
 vegList.innerHTML="";
-if(snap.empty){vegList.textContent="No vegetables found";return;}
+if(snap.empty){
+vegList.textContent="No vegetables found";
+return;
+}
 snap.forEach(item=>vegList.appendChild(makeCard(item)));
-}catch(e){vegList.textContent=e.code+": "+e.message;}
+}catch(e){
+vegList.textContent=e.code+": "+e.message;
+}
 }
 
 document.getElementById("addVeg").onclick=async()=>{
@@ -162,9 +219,12 @@ const name=document.getElementById("vegName").value.trim();
 const priceText=document.getElementById("vegPrice").value;
 const price=Number(priceText);
 const image=document.getElementById("vegImage").value.trim();
+
 if(!name || priceText==="" || !Number.isFinite(price) || price<0){
-status.textContent="Name aur sahi price bharo";return;
+status.textContent="Name aur sahi price bharo";
+return;
 }
+
 try{
 await addDoc(collection(db,"vegetables"),{
 name,price,image,available:true
@@ -174,7 +234,9 @@ document.getElementById("vegPrice").value="";
 document.getElementById("vegImage").value="";
 status.textContent="Vegetable added!";
 loadVegetables();
-}catch(e){status.textContent=e.code+": "+e.message;}
+}catch(e){
+status.textContent=e.code+": "+e.message;
+}
 };
 
 document.getElementById("logout").onclick=()=>signOut(auth);
