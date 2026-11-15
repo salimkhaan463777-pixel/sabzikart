@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SabziKart Login Test</title>
+<style>
+body{font-family:Arial;background:#eff8f0;padding:20px}
+.box{max-width:400px;margin:60px auto;background:white;padding:25px;border-radius:15px}
+h2{text-align:center;color:#16833b}
+input,button{width:100%;padding:14px;margin-top:14px;box-sizing:border-box;font-size:16px;border-radius:8px}
+input{border:1px solid #bbb}
+button{background:#16833b;color:white;border:0}
+#message{overflow-wrap:anywhere}
+</style>
+</head>
+<body>
+<div class="box">
+<h2>🥬 SabziKart</h2>
+<p>Admin Login Test</p>
+<input id="email" type="email" placeholder="Admin Email">
+<input id="password" type="password" placeholder="Password">
+<button id="login">Login</button>
+<p id="message"></p>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCX2bu-_yJHLf7LwuXQmsKq2nOJ4xOARwU",
+  authDomain: "sabzikart-46468.firebaseapp.com",
+  projectId: "sabzikart-46468",
+  storageBucket: "sabzikart-46468.firebasestorage.app",
+  messagingSenderId: "881977965995",
+  appId: "1:881977965995:web:2846b9e527feea48dee6ee",
+  measurementId: "G-FBL2F0P1H8"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+document.getElementById("login").addEventListener("click", async () => {
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  const message = document.getElementById("message");
+
+  message.textContent = "Login ho raha hai...";
+
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+    message.textContent = "SabziKart Login Successful!";
+    message.style.color = "green";
+  } catch (error) {
+    message.textContent = error.code + ": " + error.message;
+    message.style.color = "red";
+  }
+});
+</script>
+</body>
+</html>
