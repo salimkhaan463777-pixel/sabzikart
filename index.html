@@ -39,6 +39,31 @@ button:disabled{opacity:.5}
 .empty{text-align:center;padding:25px;color:#748074}
 h2{font-size:20px}
 h3{margin:8px 0 12px}
+ #vegetableList{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+}
+#vegetableList .card{
+  margin:0;
+  padding:10px;
+}
+#vegetableList .veg{
+  flex-direction:column;
+  align-items:flex-start;
+}
+#vegetableList .veg img{
+  width:100%;
+  height:100px;
+}
+#vegetableList .actions button{
+  flex:1 1 100%;
+}
+@media(max-width:340px){
+  #vegetableList{
+    grid-template-columns:1fr;
+  }
+}
 </style>
 </head>
 <body>
