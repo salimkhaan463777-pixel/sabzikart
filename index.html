@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="hi">
 <head>
@@ -39,44 +38,28 @@ button:disabled{opacity:.5}
 .empty{text-align:center;padding:25px;color:#748074}
 h2{font-size:20px}
 h3{margin:8px 0 12px}
- #vegetableList{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:12px;
+#vegetableList{
+ display:grid;
+ grid-template-columns:repeat(2,minmax(0,1fr));
+ gap:12px;
 }
-#vegetableList .card{
-  margin:0;
-  padding:10px;
-}
-#vegetableList .veg{
-  flex-direction:column;
-  align-items:flex-start;
-}
-#vegetableList .veg img{
-  width:100%;
-  height:100px;
-}
-#vegetableList .actions button{
-  flex:1 1 100%;
-}
-@media(max-width:340px){
-  #vegetableList{
-    grid-template-columns:1fr;
-  }
-}
+#vegetableList .card{margin:0;padding:10px}
+#vegetableList .veg{flex-direction:column;align-items:flex-start}
+#vegetableList .veg img{width:100%;height:100px}
+#vegetableList .actions button{flex:1 1 100%}
+@media(max-width:340px){#vegetableList{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <header>
  <div class="header">
-  <div>
-   <div class="logo">🥬 SabziKart Admin</div>
-   <div style="font-size:12px;margin-top:4px">Manage Vegetables & Orders</div>
-  </div>
-  <button id="logoutBtn" class="hidden">Logout</button>
+  <div>
+   <div class="logo">🥬 SabziKart Admin</div>
+   <div style="font-size:12px;margin-top:4px">Manage Vegetables & Orders</div>
+  </div>
+  <button id="logoutBtn" class="hidden">Logout</button>
  </div>
 </header>
-
 <main>
 <section id="loginArea" class="card">
  <h2>Admin Login</h2>
@@ -86,64 +69,58 @@ h3{margin:8px 0 12px}
  <button id="loginBtn" style="width:100%">Login</button>
  <p id="loginMessage" class="small"></p>
 </section>
-
 <section id="dashboard" class="hidden">
  <div class="tabs">
-  <button id="vegetableTab" class="active">🥬 Sabziyan</button>
-  <button id="ordersTab">📦 Orders</button>
+  <button id="vegetableTab" class="active">🥬 Sabziyan</button>
+  <button id="ordersTab">📦 Orders</button>
  </div>
-
  <section id="vegetableSection">
-  <div class="card">
-   <h3>➕ Nayi Sabzi Add Karein</h3>
-   <input id="newName" placeholder="Sabzi ka naam">
-   <input id="newPrice" type="number" min="0" placeholder="Price per kg (₹)">
-   <button id="addVegBtn" style="width:100%">Add Vegetable</button>
-   <p id="vegMessage" class="small"></p>
-  </div>
-  <h3>Sabziyon ki List</h3>
-  <div id="vegetableList"><div class="empty">Loading...</div></div>
+  <div class="card">
+   <h3>➕ Nayi Sabzi Add Karein</h3>
+   <input id="newName" placeholder="Sabzi ka naam">
+   <input id="newPrice" type="number" min="0" placeholder="Price per kg (₹)">
+   <button id="addVegBtn" style="width:100%">Add Vegetable</button>
+   <p id="vegMessage" class="small"></p>
+  </div>
+  <h3>Sabziyon ki List</h3>
+  <div id="vegetableList"><div class="empty">Loading...</div></div>
  </section>
-
  <section id="ordersSection" class="hidden">
-  <div class="card">
-   <div class="order-top">
-    <div>
-     <h3 style="margin:0">📦 Customer Orders</h3>
-     <p class="small">Naye aur purane orders yahan dekhein.</p>
-    </div>
-    <button id="refreshOrders" class="secondary">Refresh</button>
-   </div>
-   <h2 id="orderCount">0 Orders</h2>
-  </div>
-  <div id="ordersList"><div class="empty">Orders load ho rahe hain...</div></div>
+  <div class="card">
+   <div class="order-top">
+    <div>
+     <h3 style="margin:0">📦 Customer Orders</h3>
+     <p class="small">Naye aur purane orders yahan dekhein.</p>
+    </div>
+    <button id="refreshOrders" class="secondary">Refresh</button>
+   </div>
+   <h2 id="orderCount">0 Orders</h2>
+  </div>
+  <div id="ordersList"><div class="empty">Orders load ho rahe hain...</div></div>
  </section>
 </section>
 </main>
-
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js";
 import {
  getAuth,signInWithEmailAndPassword,onAuthStateChanged,signOut
 } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js";
 import {
- getFirestore,collection,getDocs,addDoc,updateDoc,deleteDoc,doc
+ getFirestore,collection,getDocs,getDoc,addDoc,updateDoc,deleteDoc,doc
 } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyB6X_lgz5mk26WED1WicBEI1R3cpKAwm5M",
-  authDomain: "sabzikart-46468.firebaseapp.com",
-  projectId: "sabzikart-46468",
-  storageBucket: "sabzikart-46468.firebasestorage.app",
-  messagingSenderId: "881977965995",
-  appId: "1:881977965995:web:2846b9e527feea48dee6ee",
-  measurementId: "G-FBL2F0P1H8"
+  apiKey: "AIzaSyB6X_lgz5mk26WED1WicBEI1R3cpKAwm5M",
+  authDomain: "sabzikart-46468.firebaseapp.com",
+  projectId: "sabzikart-46468",
+  storageBucket: "sabzikart-46468.firebasestorage.app",
+  messagingSenderId: "881977965995",
+  appId: "1:881977965995:web:2846b9e527feea48dee6ee",
+  measurementId: "G-FBL2F0P1H8"
 };
-
 const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);
 const db=getFirestore(app);
-
 const ADMIN_UID="xxJA2bzR9mUCIWTaiFHrS1vG5F03";
 
 const photos={
@@ -169,7 +146,6 @@ const photos={
  garlic:"https://sunagriindustries.com/wp-content/uploads/2026/01/Garlic-300X300-1.jpg",
  turai:"https://sunagriindustries.com/wp-content/uploads/2026/01/Ridge-Gourd-300X300.jpg"
 };
-
 const aliases=[
  ["potato",["potato","aloo","आलू","બટાકા"]],
  ["tomato",["tomato","tamatar","टमाटर","ટામેટા"]],
@@ -193,7 +169,6 @@ const aliases=[
  ["garlic",["garlic","lahsun","लहसुन","લસણ"]],
  ["turai",["turai","ridge gourd","तुरई","તુરીયા"]]
 ];
-
 function esc(v){
  return String(v??"").replace(/[&<>"']/g,c=>({
  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
@@ -206,11 +181,10 @@ function photoFor(v){
  if(typeof v.image==="string"&&v.image.trim())return v.image.trim();
  const s=(v.id+" "+v.name).toLowerCase();
  for(const [key,words] of aliases){
-  if(words.some(w=>s.includes(w)))return photos[key];
+  if(words.some(w=>s.includes(w)))return photos[key];
  }
  return "";
 }
-
 const loginArea=document.getElementById("loginArea");
 const dashboard=document.getElementById("dashboard");
 const loginMessage=document.getElementById("loginMessage");
@@ -219,33 +193,27 @@ document.getElementById("loginBtn").onclick=async()=>{
  const email=document.getElementById("email").value.trim();
  const password=document.getElementById("password").value;
  loginMessage.textContent="Login ho raha hai...";
- try{
-  await signInWithEmailAndPassword(auth,email,password);
- }catch(e){
-  loginMessage.textContent="Login error: "+e.message;
- }
+ try{await signInWithEmailAndPassword(auth,email,password);}
+ catch(e){loginMessage.textContent="Login error: "+e.message;}
 };
-
 onAuthStateChanged(auth,async user=>{
  if(user&&user.uid===ADMIN_UID){
-  loginArea.classList.add("hidden");
-  dashboard.classList.remove("hidden");
-  document.getElementById("logoutBtn").classList.remove("hidden");
-  await loadVegetables();
-  await loadOrders();
+  loginArea.classList.add("hidden");
+  dashboard.classList.remove("hidden");
+  document.getElementById("logoutBtn").classList.remove("hidden");
+  await loadVegetables();
+  await loadOrders();
  }else{
-  dashboard.classList.add("hidden");
-  document.getElementById("logoutBtn").classList.add("hidden");
-  loginArea.classList.remove("hidden");
-  if(user){
-   loginMessage.textContent="Yeh account Admin account nahi hai.";
-   await signOut(auth);
-  }
+  dashboard.classList.add("hidden");
+  document.getElementById("logoutBtn").classList.add("hidden");
+  loginArea.classList.remove("hidden");
+  if(user){
+   loginMessage.textContent="Yeh account Admin account nahi hai.";
+   await signOut(auth);
+  }
  }
 });
-
 document.getElementById("logoutBtn").onclick=()=>signOut(auth);
-
 document.getElementById("vegetableTab").onclick=()=>{
  document.getElementById("vegetableSection").classList.remove("hidden");
  document.getElementById("ordersSection").classList.add("hidden");
@@ -265,146 +233,129 @@ async function loadVegetables(){
  const box=document.getElementById("vegetableList");
  box.innerHTML='<div class="empty">Loading...</div>';
  try{
-  const snap=await getDocs(collection(db,"vegetables"));
-  if(snap.empty){
-   box.innerHTML='<div class="empty">Abhi koi sabzi nahi hai.</div>';
-   return;
-  }
-  box.innerHTML=snap.docs.map(d=>{
-   const v=d.data();
-   const image=photoFor({id:d.id,name:v.name||d.id,image:v.image});
-   return `<div class="card">
-    <div class="veg">
-     ${image?`<img src="${esc(image)}" alt="${esc(v.name||d.id)}" onerror="this.style.display='none'">`:""}
-     <div class="veg-info">
-      <b>${esc(v.name||d.id)}</b>
-      <span>${money(v.price)} / kg</span><br>
-      <span class="small">${v.available===true?"Available":"Unavailable"}</span>
-     </div>
-    </div>
-    <div class="actions">
-     <button class="secondary" onclick="editPrice('${esc(d.id)}',${Number(v.price)||0})">Update Price</button>
-     <button class="secondary" onclick="toggleVeg('${esc(d.id)}',${v.available===true})">${v.available===true?"Unavailable karein":"Available karein"}</button>
-     <button class="danger" onclick="removeVeg('${esc(d.id)}')">Delete</button>
-    </div>
-   </div>`;
-  }).join("");
- }catch(e){
-  box.innerHTML='<div class="empty">Sabzi load error: '+esc(e.message)+'</div>';
- }
+  const snap=await getDocs(collection(db,"vegetables"));
+  if(snap.empty){box.innerHTML='<div class="empty">Abhi koi sabzi nahi hai.</div>';return;}
+  box.innerHTML=snap.docs.map(d=>{
+   const v=d.data();
+   const image=photoFor({id:d.id,name:v.name||d.id,image:v.image});
+   return `<div class="card">
+    <div class="veg">
+     ${image?`<img src="${esc(image)}" alt="${esc(v.name||d.id)}" onerror="this.style.display='none'">`:""}
+     <div class="veg-info">
+      <b>${esc(v.name||d.id)}</b>
+      <span>${money(v.price)} / kg</span><br>
+      <span class="small">${v.available===true?"Available":"Unavailable"}</span>
+     </div>
+    </div>
+    <div class="actions">
+     <button class="secondary" onclick="editPrice('${esc(d.id)}',${Number(v.price)||0})">Update Price</button>
+     <button class="secondary" onclick="toggleVeg('${esc(d.id)}',${v.available===true})">${v.available===true?"Unavailable karein":"Available karein"}</button>
+     <button class="danger" onclick="removeVeg('${esc(d.id)}')">Delete</button>
+    </div>
+   </div>`;
+  }).join("");
+ }catch(e){box.innerHTML='<div class="empty">Sabzi load error: '+esc(e.message)+'</div>';}
 }
-
 document.getElementById("addVegBtn").onclick=async()=>{
  const name=document.getElementById("newName").value.trim();
  const price=Number(document.getElementById("newPrice").value);
  const msg=document.getElementById("vegMessage");
- if(name.length<2||!Number.isFinite(price)||price<0){
-  msg.textContent="Sahi naam aur price bharein.";
-  return;
- }
+ if(name.length<2||!Number.isFinite(price)||price<0){msg.textContent="Sahi naam aur price bharein.";return;}
  try{
-  await addDoc(collection(db,"vegetables"),{
-   name,price,available:true
-  });
-  document.getElementById("newName").value="";
-  document.getElementById("newPrice").value="";
-  msg.textContent="Sabzi add ho gayi!";
-  await loadVegetables();
+  await addDoc(collection(db,"vegetables"),{name,price,available:true});
+  document.getElementById("newName").value="";
+  document.getElementById("newPrice").value="";
+  msg.textContent="Sabzi add ho gayi!";
+  await loadVegetables();
  }catch(e){msg.textContent="Error: "+e.message;}
 };
-
 window.editPrice=async(id,current)=>{
  const answer=prompt("Nayi price per kg likhein:",current);
  if(answer===null)return;
  const price=Number(answer);
  if(!Number.isFinite(price)||price<0){alert("Sahi price likhein.");return;}
- try{
-  await updateDoc(doc(db,"vegetables",id),{price});
-  await loadVegetables();
- }catch(e){alert("Price update nahi hui: "+e.message);}
+ try{await updateDoc(doc(db,"vegetables",id),{price});await loadVegetables();}
+ catch(e){alert("Price update nahi hui: "+e.message);}
 };
-
 window.toggleVeg=async(id,current)=>{
- try{
-  await updateDoc(doc(db,"vegetables",id),{available:!current});
-  await loadVegetables();
- }catch(e){alert("Update nahi hua: "+e.message);}
+ try{await updateDoc(doc(db,"vegetables",id),{available:!current});await loadVegetables();}
+ catch(e){alert("Update nahi hua: "+e.message);}
 };
-
 window.removeVeg=async id=>{
  if(!confirm("Kya aap is sabzi ko delete karna chahte hain?"))return;
- try{
-  await deleteDoc(doc(db,"vegetables",id));
-  await loadVegetables();
- }catch(e){alert("Delete nahi hua: "+e.message);}
+ try{await deleteDoc(doc(db,"vegetables",id));await loadVegetables();}
+ catch(e){alert("Delete nahi hua: "+e.message);}
 };
 
 async function loadOrders(){
  const box=document.getElementById("ordersList");
  box.innerHTML='<div class="empty">Orders load ho rahe hain...</div>';
  try{
-  const snap=await getDocs(collection(db,"orders"));
-  const orders=snap.docs.map(d=>({id:d.id,...d.data()}));
-  orders.sort((a,b)=>String(b.createdAt||"").localeCompare(String(a.createdAt||"")));
-  document.getElementById("orderCount").textContent=orders.length+" Orders";
-
-  if(!orders.length){
-   box.innerHTML='<div class="card empty">Abhi koi order nahi aaya hai.</div>';
-   return;
-  }
-
-  box.innerHTML=orders.map(o=>{
-   const items=Array.isArray(o.items)?o.items:[];
-   const delivered=o.status==="Delivered";
-   const date=o.createdAt?new Date(o.createdAt).toLocaleString("en-IN"):"";
-   return `<div class="card">
-    <div class="order-top">
-     <div>
-      <b>Order #${esc(o.id.slice(0,9))}</b>
-      <div class="order-id">${esc(date)}</div>
-     </div>
-     <span class="status ${delivered?"done":""}">${esc(o.status||"Pending")}</span>
-    </div>
-
-    <h3>👤 Customer Details</h3>
-    <div class="info">
-     <b>Naam:</b> ${esc(o.customerName||"")}<br>
-     <b>Mobile:</b> ${esc(o.mobile||"")}<br>
-     <b>Address:</b> ${esc(o.address||"")}<br>
-     <b>Landmark:</b> ${esc(o.landmark||"Nahi diya")}
-    </div>
-
-    <h3>🧺 Ordered Vegetables</h3>
-    ${items.length?items.map(v=>`
-     <div class="order-line">
-      <span>${esc(v.name||"Sabzi")} × ${esc(v.quantity)} kg<br><small>${money(v.price)} per kg</small></span>
-      <b>${money(v.lineTotal)}</b>
-     </div>`).join(""):'<p class="small">Items ki details nahi mili.</p>'}
-
-    <h3>Bill Details</h3>
-    <div class="order-line"><span>Sabzi ka total</span><b>${money(o.subtotal)}</b></div>
-    <div class="order-line"><span>Delivery charge</span><b>${Number(o.deliveryCharge)===0?"FREE":money(o.deliveryCharge)}</b></div>
-    <div class="order-line total"><span>Grand Total</span><span>${money(o.total)}</span></div>
-    <div class="info">
-     <b>Payment:</b> ${esc(o.paymentMethod||"COD")}<br>
-     <b>Order Status:</b> ${esc(o.status||"Pending")}
-    </div>
-    <button style="width:100%;margin-top:12px" onclick="changeOrderStatus('${esc(o.id)}','${delivered?"Pending":"Delivered"}')">
-     ${delivered?"Mark as Pending":"✓ Mark as Delivered"}
-    </button>
-   </div>`;
-  }).join("");
+  const snap=await getDocs(collection(db,"orders"));
+  const orders=snap.docs.map(d=>({id:d.id,...d.data()}));
+  orders.sort((a,b)=>String(b.createdAt||"").localeCompare(String(a.createdAt||"")));
+  document.getElementById("orderCount").textContent=orders.length+" Orders";
+  if(!orders.length){box.innerHTML='<div class="card empty">Abhi koi order nahi aaya hai.</div>';return;}
+  box.innerHTML=orders.map(o=>{
+   const items=Array.isArray(o.items)?o.items:[];
+   const delivered=o.status==="Delivered";
+   const date=o.createdAt?new Date(o.createdAt).toLocaleString("en-IN"):"";
+   return `<div class="card">
+    <div class="order-top">
+     <div>
+      <b>Order #${esc(o.id.slice(0,9))}</b>
+      <div class="order-id">${esc(date)}</div>
+     </div>
+     <span class="status ${delivered?"done":""}">${esc(o.status||"Pending")}</span>
+    </div>
+    <h3>👤 Customer Details</h3>
+    <div class="info">
+     <b>Naam:</b> ${esc(o.customerName||"")}<br>
+     <b>Mobile:</b> ${esc(o.mobile||"")}<br>
+     <b>Address:</b> ${esc(o.address||"")}<br>
+     <b>Landmark:</b> ${esc(o.landmark||"Nahi diya")}
+    </div>
+    <h3>🧺 Ordered Vegetables</h3>
+    ${items.length?items.map(v=>`
+     <div class="order-line">
+      <span>${esc(v.name||"Sabzi")} × ${esc(v.quantity)} kg<br><small>${money(v.price)} per kg</small></span>
+      <b>${money(v.lineTotal)}</b>
+     </div>`).join(""):'<p class="small">Items ki details nahi mili.</p>'}
+    <h3>Bill Details</h3>
+    <div class="order-line"><span>Sabzi ka total</span><b>${money(o.subtotal)}</b></div>
+    <div class="order-line"><span>Delivery charge</span><b>${Number(o.deliveryCharge)===0?"FREE":money(o.deliveryCharge)}</b></div>
+    <div class="order-line total"><span>Grand Total</span><span>${money(o.total)}</span></div>
+    <div class="info">
+     <b>Payment:</b> ${esc(o.paymentMethod||"COD")}<br>
+     <b>Order Status:</b> ${esc(o.status||"Pending")}
+    </div>
+    <button data-order-id="${esc(o.id)}" style="width:100%;margin-top:12px" onclick="window.changeOrderStatus(this.dataset.orderId,'${delivered?"Pending":"Delivered"}')">
+     ${delivered?"Mark as Pending":"✓ Mark as Delivered"}
+    </button>
+   </div>`;
+  }).join("");
  }catch(e){
-  box.innerHTML='<div class="card empty">Orders load nahi hue: '+esc(e.message)+'</div>';
+  box.innerHTML='<div class="card empty">Orders load nahi hue: '+esc(e.message)+'</div>';
  }
 }
 
 window.changeOrderStatus=async(id,status)=>{
+ const button=document.querySelector(`#ordersList button[data-order-id="${CSS.escape(id)}"]`);
+ if(button){button.disabled=true;button.textContent="Updating...";}
  try{
-  await updateDoc(doc(db,"orders",id),{status});
-  await loadOrders();
+  if(!auth.currentUser||auth.currentUser.uid!==ADMIN_UID){
+   throw new Error("Admin login verify nahi hua. Dobara login karein.");
+  }
+  await updateDoc(doc(db,"orders",id),{status:status});
+  const updated=await getDoc(doc(db,"orders",id));
+  if(!updated.exists()||updated.data().status!==status){
+   throw new Error("Firebase mein status save hone ki tasdeeq nahi hui.");
+  }
+  await loadOrders();
+  alert("Order status successfully "+status+" ho gaya!");
  }catch(e){
-  alert("Order status update nahi hua: "+e.message);
+  if(button){button.disabled=false;button.textContent=status==="Delivered"?"✓ Mark as Delivered":"Mark as Pending";}
+  alert("Order update nahi hua: "+(e.code||"error")+" - "+e.message);
  }
 };
 </script>
