@@ -3,317 +3,338 @@
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SabziKart - Fresh Vegetables</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#f5f8f5;font-family:Arial,sans-serif;color:#222}
-header{background:#12833b;color:white;padding:18px;text-align:center}
-header h1{margin:0;font-size:27px}
-header p{margin:6px 0 0;font-size:13px}
-.top{background:white;padding:12px;position:sticky;top:0;z-index:2;box-shadow:0 2px 8px #ddd}
-.top input{width:100%;padding:13px;border:1px solid #ddd;border-radius:10px}
-.container{max-width:850px;margin:auto;padding:14px}
-.banner{background:#e5f5e9;padding:17px;border-radius:14px;margin-bottom:15px}
-.banner h2{margin:0 0 6px;color:#12833b}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.card{background:white;border-radius:14px;padding:10px;border:1px solid #e8eee8;box-shadow:0 2px 8px #172b1710}
-.card img{width:100%;height:125px;object-fit:contain}
-.card h3{font-size:15px;min-height:34px;margin:8px 0}
-.price{font-weight:bold;color:#12833b;font-size:18px}
-.unit{font-size:12px;color:#777}
-.qty{display:flex;align-items:center;justify-content:center;gap:13px;margin-top:10px}
-.qty button{width:36px;height:36px;border:0;border-radius:8px;background:#16833b;color:white;font-size:22px}
+body{margin:0;font-family:Arial,sans-serif;background:#f5f7f5;color:#202820}
+header{background:#138b42;color:white;padding:17px 15px}
+.header-inner{max-width:850px;margin:auto}
+.logo{font-size:25px;font-weight:800}
+.tagline{font-size:12px;margin-top:4px}
+main{max-width:850px;margin:auto;padding:14px}
+.banner{background:linear-gradient(120deg,#dff8e5,#f1ffef);padding:20px;border-radius:17px;margin:8px 0 16px}
+.banner h2{margin:0 0 7px;color:#176d35}
+.banner p{margin:0;color:#47634d;font-size:14px}
+input,textarea{width:100%;padding:13px;border:1px solid #d9e1d9;border-radius:10px;font-size:15px;background:white;margin:7px 0}
+h3{margin:18px 0 12px}
+.products{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.product{background:white;border-radius:14px;padding:10px;box-shadow:0 2px 9px #0000000c}
+.product img{width:100%;height:115px;object-fit:cover;border-radius:10px;background:#edf4ed}
+.pname{font-weight:700;margin:9px 0 5px}
+.price{color:#18823e;font-weight:700}
+.small{font-size:12px;color:#758075}
+.qty{display:flex;align-items:center;justify-content:space-between;margin-top:10px}
+.qty button,.green-btn{border:0;background:#168b42;color:white;border-radius:9px;padding:9px 14px;font-size:17px;font-weight:bold}
 .qty span{font-weight:bold}
-.cartbox,.checkout{background:white;padding:16px;border-radius:14px;margin-top:18px}
-.cartrow{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid #eee;padding:10px 0;font-size:14px}
-.totalrow{display:flex;justify-content:space-between;margin:11px 0}
-.grand{font-size:20px;font-weight:bold;color:#12833b}
-.checkout input,.checkout textarea{width:100%;padding:13px;margin:6px 0 12px;border:1px solid #ddd;border-radius:9px;font-size:15px}
-.checkout textarea{height:85px;resize:vertical}
-.mainbtn{width:100%;padding:15px;border:0;border-radius:10px;background:#12833b;color:white;font-size:16px;font-weight:bold}
-.mainbtn:disabled{opacity:.6}
-.note{font-size:12px;color:#777;line-height:1.5}
-#message{overflow-wrap:anywhere;line-height:1.5}
-@media(min-width:600px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.cart,.checkout,.receipt{background:white;border-radius:15px;padding:15px;margin-top:17px;box-shadow:0 2px 10px #0000000c}
+.cart-row,.bill-row{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid #edf0ed;font-size:14px}
+.total{font-size:18px;font-weight:800;color:#137b39}
+.green-btn{width:100%;font-size:16px;padding:14px;margin-top:12px}
+.green-btn:disabled{opacity:.5}
+.hidden{display:none}
+.note{font-size:12px;color:#657365;line-height:1.5}
+.receipt{text-align:left;border:1px solid #dceade}
+.success{text-align:center;color:#138b42;font-size:23px;font-weight:800}
+.receipt-head{text-align:center;border-bottom:1px dashed #b8c8b9;padding-bottom:12px}
+.receipt h3{margin:14px 0 7px}
+.customer-info{background:#f5faf5;padding:12px;border-radius:10px;line-height:1.7;font-size:14px;overflow-wrap:anywhere}
+.receipt-item{display:flex;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px solid #edf0ed;font-size:14px}
+.final-total{font-size:20px;font-weight:800;color:#147c3b}
+@media(min-width:600px){.products{grid-template-columns:repeat(3,minmax(0,1fr))}}
 </style>
 </head>
 <body>
 <header>
-<h1>🥬 SabziKart</h1>
-<p>Taazi Sabzi, Aapke Ghar Tak</p>
+ <div class="header-inner">
+  <div class="logo">🥬 SabziKart</div>
+  <div class="tagline">Taazi Sabzi, Seedha Aapke Ghar</div>
+ </div>
 </header>
 
-<div class="top">
-<input id="search" placeholder="🔍 Sabzi search karein...">
-</div>
+<main>
+<section id="shopArea">
+ <div class="banner">
+  <h2>Fresh Vegetables 🥦</h2>
+  <p>Roz ki taazi sabzi, ab ghar baithe order karein.</p>
+ </div>
 
-<div class="container">
-<div class="banner">
-<h2>Fresh Vegetables 🥦</h2>
-<p>Roz ki taazi sabzi, aasaan ghar delivery!</p>
-</div>
+ <input id="search" placeholder="🔍 Sabzi search karein..." oninput="renderProducts()">
 
-<h2>🛒 Sabziyan</h2>
-<div class="grid" id="products">Sabziyan load ho rahi hain...</div>
+ <h3>Sabhi Sabziyan</h3>
+ <div id="products" class="products">Sabzi load ho rahi hain...</div>
 
-<div class="cartbox">
-<h2>🛒 Aapka Cart</h2>
-<div id="cartItems">Abhi cart khaali hai.</div>
-<div class="totalrow"><span>Sabzi ka total</span><b id="subtotal">₹0</b></div>
-<div class="totalrow"><span>Delivery charge</span><b id="delivery">₹0</b></div>
-<div class="totalrow grand"><span>Total Bill</span><span id="grand">₹0</span></div>
-<p class="note">₹100 tak order par ₹20 delivery. ₹100 se zyada par free delivery.</p>
-</div>
+ <section class="cart">
+  <h3>🛒 Aapka Cart</h3>
+  <div id="cartItems">Abhi cart khaali hai.</div>
+  <div class="bill-row"><span>Sabzi ka total</span><b id="subtotal">₹0</b></div>
+  <div class="bill-row"><span>Delivery charge</span><b id="delivery">₹0</b></div>
+  <div class="bill-row total"><span>Grand Total</span><span id="grandTotal">₹0</span></div>
+  <p class="note">₹100 tak ke order par ₹20 delivery charge. ₹100 se upar delivery FREE.</p>
+  <button class="green-btn" id="checkoutBtn" onclick="showCheckout()" disabled>Checkout karein</button>
+ </section>
 
-<div class="checkout">
-<h2>📍 Delivery Details</h2>
-<input id="customerName" placeholder="Aapka poora naam">
-<input id="mobile" type="tel" maxlength="10" placeholder="10 digit mobile number">
-<textarea id="address" placeholder="Poora delivery address"></textarea>
-<input id="landmark" placeholder="Landmark (optional)">
-<h3>💵 Payment Method</h3>
-<p><b>Cash on Delivery (COD)</b></p>
-<p class="note">Sabzi ghar pahunchne par cash payment karein.</p>
-<button class="mainbtn" id="placeOrder">Place Order</button>
-<p id="message"></p>
-</div>
-</div>
+ <section class="checkout hidden" id="checkout">
+  <h3>📦 Delivery Details</h3>
+  <input id="customerName" placeholder="Aapka poora naam">
+  <input id="mobile" type="tel" maxlength="10" placeholder="10 digit mobile number">
+  <textarea id="address" rows="3" placeholder="Poora ghar ka address"></textarea>
+  <input id="landmark" placeholder="Landmark (optional)">
+  <h3>Payment Method</h3>
+  <div class="customer-info">💵 Cash on Delivery (COD)</div>
+  <button class="green-btn" id="placeBtn" onclick="placeOrder()">Place Order</button>
+  <p class="note">Order confirm hone ke baad aapko poora bill dikhega.</p>
+ </section>
+</section>
+
+<section id="receiptArea" class="hidden">
+ <div class="receipt" id="receiptContent"></div>
+ <button class="green-btn" onclick="newShopping()">Nayi Shopping Karein</button>
+</section>
+</main>
 
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js";
-import {getFirestore,collection,getDocs,addDoc}
-from "https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
+import {getFirestore,collection,getDocs,addDoc} from "https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
 
 const firebaseConfig={
-apiKey:"AIzaSyCX2bu-_yJHLf7LwuXQmsKq2nOJ4xOARw",
-authDomain:"sabzikart-46468.firebaseapp.com",
-projectId:"sabzikart-46468",
-storageBucket:"sabzikart-46468.firebasestorage.app",
-messagingSenderId:"881977965995",
-appId:"1:881977965995:web:2846b9e527feea48dee6ee",
-measurementId:"G-FBL2F0P1H8"
+ apiKey:"AIzaSyCX2bu-_yJHLf7LwuXQmsKq2nOJ4xOARw",
+ authDomain:"sabzikart-46468.firebaseapp.com",
+ projectId:"sabzikart-46468",
+ storageBucket:"sabzikart-46468.firebasestorage.app",
+ messagingSenderId:"881977965995",
+ appId:"1:881977965995:web:2846b9e527feea48dee6ee",
+ measurementId:"G-FBL2F0P1H8"
 };
 
 const app=initializeApp(firebaseConfig);
 const db=getFirestore(app);
-const products=document.getElementById("products");
-const cart={};
-let vegetables=[];
 
 const photos={
-potato:"https://sunagriindustries.com/wp-content/uploads/2026/01/Potato-300X300.jpeg",
-tomato:"https://sunagriindustries.com/wp-content/uploads/2026/01/Tomato-300X300-2.jpg",
-onion:"https://sunagriindustries.com/wp-content/uploads/2026/01/Onion-300X300.jpg",
-cauliflower:"https://sunagriindustries.com/wp-content/uploads/2026/01/Cauliflower-300X300.jpg",
-cabbage:"https://sunagriindustries.com/wp-content/uploads/2026/01/Cabbage-300X300.jpg",
-brinjal:"https://sunagriindustries.com/wp-content/uploads/2026/01/Brinjal-300X300.jpg",
-bhindi:"https://sunagriindustries.com/wp-content/uploads/2026/01/Okra-300X300.jpg",
-lauki:"https://sunagriindustries.com/wp-content/uploads/2026/01/Bottle-Gourd-300X300.jpg",
-carrot:"https://sunagriindustries.com/wp-content/uploads/2026/01/Carrot-300X300.jpg",
-cucumber:"https://sunagriindustries.com/wp-content/uploads/2026/01/Cucumber-300X300.jpg",
-chilli:"https://sunagriindustries.com/wp-content/uploads/2026/01/Green-Chillies-300X300.jpg",
-garlic:"https://sunagriindustries.com/wp-content/uploads/2026/01/Garlic-300X300-1.jpg",
-karela:"https://sunagriindustries.com/wp-content/uploads/2026/01/Bitter-Gourd-300X300.jpg"
+ potato:"https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=500",
+ tomato:"https://images.unsplash.com/photo-1546094096-0df4bcaaa337?w=500",
+ onion:"https://images.unsplash.com/photo-1508747703725-719777637510?w=500",
+ cauliflower:"https://images.unsplash.com/photo-1568584711075-3d021a7c3ca3?w=500",
+ cabbage:"https://images.unsplash.com/photo-1594282486552-05b4d80fbb9f?w=500",
+ brinjal:"https://images.unsplash.com/photo-1659261200836-7f6a3fbe4d50?w=500",
+ bhindi:"https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=500",
+ lauki:"https://images.unsplash.com/photo-1568584711075-3d021a7c3ca3?w=500",
+ carrot:"https://images.unsplash.com/photo-1445282768818-728615cc910a?w=500",
+ cucumber:"https://images.unsplash.com/photo-1604977042946-1eecc30f269e?w=500",
+ chilli:"https://images.unsplash.com/photo-1588252303782-cb80119abd6d?w=500",
+ garlic:"https://images.unsplash.com/photo-1540148426945-6cf22a6b2383?w=500",
+ karela:"https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=500"
 };
+
+let vegetables=[];
+let cart={};
+
+function escapeHTML(value){
+ return String(value??"").replace(/[&<>"']/g,c=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ }[c]));
+}
 
 function photoFor(v){
-const s=(v.id+" "+v.name).toLowerCase();
-const keys={
-potato:["potato","aloo","आलू","બટાકા"],
-tomato:["tomato","tamatar","टमाटर","ટામેટા"],
-onion:["onion","pyaz","प्याज","ડુંગળી"],
-cauliflower:["cauliflower","gobhi","गोभी","ફૂલકોબી"],
-cabbage:["cabbage","patta gobhi","पत्तागोभी","કોબી"],
-brinjal:["brinjal","baingan","बैंगन","રીંગણ"],
-bhindi:["bhindi","okra","lady finger","भिंडी","ભીંડા"],
-lauki:["lauki","bottle gourd","दूधी","लौकी","દૂધી"],
-carrot:["carrot","gajar","गाजर","ગાજર"],
-cucumber:["cucumber","kheera","खीरा","કાકડી"],
-chilli:["chilli","mirchi","मिर्च","મરચાં"],
-garlic:["garlic","lahsun","लहसुन","લસણ"],
-karela:["karela","bitter gourd","करेला","કારેલા"]
-};
-for(const key in keys){
-if(keys[key].some(word=>s.includes(word)))return photos[key]||"";
-}
-return "";
+ const s=(v.name+" "+v.id).toLowerCase();
+ for(const key of Object.keys(photos)){
+  if(s.includes(key)) return photos[key];
+ }
+ if(s.includes("आलू"))return photos.potato;
+ if(s.includes("टमाटर"))return photos.tomato;
+ if(s.includes("प्याज"))return photos.onion;
+ if(s.includes("भिंडी"))return photos.bhindi;
+ if(s.includes("बैंगन"))return photos.brinjal;
+ if(s.includes("लौकी"))return photos.lauki;
+ if(s.includes("गोभी"))return photos.cauliflower;
+ return "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=500";
 }
 
-function renderProducts(){
-const search=document.getElementById("search").value.toLowerCase();
-products.innerHTML="";
-const filtered=vegetables.filter(v=>
-v.available && v.name.toLowerCase().includes(search)
-);
-if(!filtered.length){
-products.textContent="Is naam ki available sabzi nahi mili.";
-return;
-}
-filtered.forEach(v=>{
-const card=document.createElement("div");
-card.className="card";
-const img=document.createElement("img");
-const photo=photoFor(v);
-if(photo){
-img.src=photo;
-img.alt=v.name;
-img.onerror=()=>img.style.display="none";
-}else{
-img.style.display="none";
-}
-const name=document.createElement("h3");
-name.textContent=v.name;
-const price=document.createElement("div");
-price.className="price";
-price.textContent="₹"+v.price;
-const unit=document.createElement("div");
-unit.className="unit";
-unit.textContent="Per kg";
-const qty=document.createElement("div");
-qty.className="qty";
-const minus=document.createElement("button");
-minus.textContent="−";
-const count=document.createElement("span");
-count.textContent=cart[v.id]||0;
-const plus=document.createElement("button");
-plus.textContent="+";
-minus.onclick=()=>{
-cart[v.id]=Math.max(0,(cart[v.id]||0)-1);
-count.textContent=cart[v.id];
-renderCart();
+window.renderProducts=function(){
+ const q=document.getElementById("search").value.toLowerCase();
+ const list=vegetables.filter(v=>v.available && v.name.toLowerCase().includes(q));
+ const box=document.getElementById("products");
+ if(!list.length){
+  box.innerHTML="<p>Abhi koi sabzi available nahi hai.</p>";
+  return;
+ }
+ box.innerHTML=list.map(v=>`
+  <div class="product">
+   <img src="${photoFor(v)}" alt="${escapeHTML(v.name)}" onerror="this.style.display='none'">
+   <div class="pname">${escapeHTML(v.name)}</div>
+   <div class="price">₹${v.price} <span class="small">/ kg</span></div>
+   <div class="qty">
+    <button onclick="changeQty('${v.id}',-1)">−</button>
+    <span>${cart[v.id]||0}</span>
+    <button onclick="changeQty('${v.id}',1)">+</button>
+   </div>
+  </div>`).join("");
 };
-plus.onclick=()=>{
-cart[v.id]=(cart[v.id]||0)+1;
-count.textContent=cart[v.id];
-renderCart();
+
+window.changeQty=function(id,change){
+ const current=cart[id]||0;
+ const next=current+change;
+ if(next<=0)delete cart[id];
+ else cart[id]=Math.min(next,99);
+ renderProducts();
+ renderCart();
 };
-qty.append(minus,count,plus);
-card.append(img,name,price,unit,qty);
-products.append(card);
-});
+
+function getCartRows(){
+ return vegetables.filter(v=>cart[v.id]>0).map(v=>({
+  vegetableId:v.id,
+  name:String(v.name),
+  price:Number(v.price),
+  quantity:Number(cart[v.id]),
+  lineTotal:Number(v.price)*Number(cart[v.id])
+ }));
 }
+
+function totals(){
+ const rows=getCartRows();
+ const subtotal=rows.reduce((s,v)=>s+v.lineTotal,0);
+ const deliveryCharge=rows.length?(subtotal<=100?20:0):0;
+ return {rows,subtotal,deliveryCharge,total:subtotal+deliveryCharge};
+}
+
+function money(n){return "₹"+Number(n).toFixed(2).replace(/\.00$/,"");}
 
 function renderCart(){
-const cartItems=document.getElementById("cartItems");
-cartItems.innerHTML="";
-let subtotal=0;
-let count=0;
-vegetables.forEach(v=>{
-const q=cart[v.id]||0;
-if(q>0){
-subtotal+=v.price*q;
-count+=q;
-const row=document.createElement("div");
-row.className="cartrow";
-const label=document.createElement("span");
-label.textContent=v.name+" × "+q+" kg";
-const amount=document.createElement("b");
-amount.textContent="₹"+(v.price*q);
-row.append(label,amount);
-cartItems.append(row);
+ const t=totals();
+ document.getElementById("cartItems").innerHTML=t.rows.length?
+  t.rows.map(v=>`<div class="cart-row"><span>${escapeHTML(v.name)} × ${v.quantity} kg</span><b>${money(v.lineTotal)}</b></div>`).join("")
+  :"Abhi cart khaali hai.";
+ document.getElementById("subtotal").textContent=money(t.subtotal);
+ document.getElementById("delivery").textContent=t.deliveryCharge===0&&t.rows.length?"FREE":money(t.deliveryCharge);
+ document.getElementById("grandTotal").textContent=money(t.total);
+ document.getElementById("checkoutBtn").disabled=!t.rows.length;
 }
-});
-if(!count)cartItems.textContent="Abhi cart khaali hai.";
-const delivery=count?(subtotal<=100?20:0):0;
-document.getElementById("subtotal").textContent="₹"+subtotal;
-document.getElementById("delivery").textContent="₹"+delivery;
-document.getElementById("grand").textContent="₹"+(subtotal+delivery);
-}
+
+window.showCheckout=function(){
+ if(!getCartRows().length)return;
+ document.getElementById("checkout").classList.remove("hidden");
+ document.getElementById("checkout").scrollIntoView({behavior:"smooth"});
+};
+
+window.placeOrder=async function(){
+ const name=document.getElementById("customerName").value.trim();
+ const mobile=document.getElementById("mobile").value.trim();
+ const address=document.getElementById("address").value.trim();
+ const landmark=document.getElementById("landmark").value.trim();
+ const t=totals();
+
+ if(name.length<2){alert("Apna poora naam likhein.");return;}
+ if(!/^[0-9]{10}$/.test(mobile)){alert("Sahi 10 digit mobile number likhein.");return;}
+ if(address.length<8){alert("Poora address likhein.");return;}
+ if(!t.rows.length){alert("Pehle cart mein sabzi add karein.");return;}
+
+ const btn=document.getElementById("placeBtn");
+ btn.disabled=true;
+ btn.textContent="Order save ho raha hai...";
+
+ try{
+  const orderData={
+   customerName:name,
+   mobile:mobile,
+   address:address,
+   landmark:landmark,
+   items:t.rows.map(v=>({
+    vegetableId:v.vegetableId,
+    name:v.name,
+    price:v.price,
+    quantity:v.quantity,
+    lineTotal:v.lineTotal
+   })),
+   subtotal:t.subtotal,
+   deliveryCharge:t.deliveryCharge,
+   total:t.total,
+   paymentMethod:"COD",
+   status:"Pending",
+   createdAt:new Date().toISOString()
+  };
+
+  const docRef=await addDoc(collection(db,"orders"),orderData);
+  showReceipt({...orderData,orderId:docRef.id});
+ }catch(error){
+  console.error(error);
+  alert("Order save nahi hua: "+(error.message||error));
+  btn.disabled=false;
+  btn.textContent="Place Order";
+ }
+};
+
+function showReceipt(order){
+ document.getElementById("shopArea").classList.add("hidden");
+ document.getElementById("receiptArea").classList.remove("hidden");
+
+ const items=order.items.map(v=>`
+  <div class="receipt-item">
+   <span>${escapeHTML(v.name)}<br><small>${v.quantity} kg × ${money(v.price)}</small></span>
+   <b>${money(v.lineTotal)}</b>
+  </div>`).join("");
+
+ document.getElementById("receiptContent").innerHTML=`
+  <div class="receipt-head">
+   <div class="success">✓ Order Confirmed!</div>
+   <p>Shukriya! Aapka order successfully save ho gaya.</p>
+   <b>SabziKart</b><br>
+   <span class="small">Order ID: ${escapeHTML(order.orderId)}</span>
+  </div>
+  <h3>🧺 Aapki Sabziyan</h3>
+  ${items}
+  <h3>Bill Details</h3>
+  <div class="bill-row"><span>Sabzi ka total</span><b>${money(order.subtotal)}</b></div>
+  <div class="bill-row"><span>Delivery charge</span><b>${order.deliveryCharge===0?"FREE":money(order.deliveryCharge)}</b></div>
+  <div class="bill-row final-total"><span>Grand Total</span><span>${money(order.total)}</span></div>
+  <div class="customer-info">
+   <b>📍 Delivery Details</b><br>
+   Naam: ${escapeHTML(order.customerName)}<br>
+   Mobile: ${escapeHTML(order.mobile)}<br>
+   Address: ${escapeHTML(order.address)}<br>
+   Landmark: ${escapeHTML(order.landmark||"Nahi diya")}
+  </div>
+  <div class="customer-info" style="margin-top:12px">
+   <b>💵 Payment: Cash on Delivery (COD)</b><br>
+   Order Status: Pending
+  </div>
+  <p class="note" style="text-align:center">SabziKart se shopping karne ke liye dhanyavaad! ❤️</p>
+ `;
+ window.scrollTo({top:0,behavior:"smooth"});
+ cart={};
+};
+
+window.newShopping=function(){
+ document.getElementById("receiptArea").classList.add("hidden");
+ document.getElementById("shopArea").classList.remove("hidden");
+ document.getElementById("checkout").classList.add("hidden");
+ document.getElementById("customerName").value="";
+ document.getElementById("mobile").value="";
+ document.getElementById("address").value="";
+ document.getElementById("landmark").value="";
+ renderProducts();
+ renderCart();
+ window.scrollTo({top:0,behavior:"smooth"});
+};
 
 async function loadVegetables(){
-try{
-const snap=await getDocs(collection(db,"vegetables"));
-vegetables=snap.docs.map(d=>{
-const data=d.data();
-const price=Number(data.price);
-return {
-id:d.id,
-name:typeof data.name==="string"&&data.name.trim()?data.name.trim():d.id,
-price:price,
-available:data.available===true
-};
-}).filter(v=>Number.isFinite(v.price)&&v.price>=0);
-renderProducts();
-renderCart();
-}catch(e){
-products.textContent="Sabzi load nahi hui: "+e.message;
+ try{
+  const snap=await getDocs(collection(db,"vegetables"));
+  vegetables=snap.docs.map(d=>{
+   const data=d.data();
+   return {
+    id:d.id,
+    name:String(data.name||d.id),
+    price:Number(data.price),
+    available:data.available===true
+   };
+  }).filter(v=>Number.isFinite(v.price)&&v.price>=0);
+  renderProducts();
+  renderCart();
+ }catch(error){
+  console.error(error);
+  document.getElementById("products").textContent="Sabzi load nahi hui: "+error.message;
+ }
 }
-}
-
-document.getElementById("search").addEventListener("input",renderProducts);
-
-document.getElementById("placeOrder").onclick=async()=>{
-const name=document.getElementById("customerName").value.trim();
-const mobile=document.getElementById("mobile").value.trim();
-const address=document.getElementById("address").value.trim();
-const landmark=document.getElementById("landmark").value.trim();
-const items=[];
-let subtotal=0;
-
-vegetables.forEach(v=>{
-const q=Number(cart[v.id]||0);
-if(q>0){
-if(!v.name||!Number.isFinite(v.price)){
-throw new Error("Sabzi ka naam ya price missing hai: "+v.id);
-}
-items.push({
-vegetableId:String(v.id),
-name:String(v.name),
-price:Number(v.price),
-quantity:q,
-lineTotal:Number(v.price)*q
-});
-subtotal+=Number(v.price)*q;
-}
-});
-
-if(!items.length){alert("Pehle cart mein sabzi add karein");return;}
-if(!name||!/^[0-9]{10}$/.test(mobile)||!address){
-alert("Naam, sahi 10 digit mobile aur address bharein");
-return;
-}
-
-const delivery=subtotal<=100?20:0;
-const total=subtotal+delivery;
-const btn=document.getElementById("placeOrder");
-const message=document.getElementById("message");
-btn.disabled=true;
-btn.textContent="Order bheja ja raha hai...";
-message.textContent="";
-
-try{
-const orderData={
-customerName:String(name),
-mobile:String(mobile),
-address:String(address),
-landmark:String(landmark),
-items:items,
-subtotal:Number(subtotal),
-deliveryCharge:Number(delivery),
-total:Number(total),
-paymentMethod:"COD",
-status:"Pending",
-createdAt:new Date().toISOString()
-};
-
-await addDoc(collection(db,"orders"),orderData);
-message.textContent="✅ Order successfully save ho gaya!";
-Object.keys(cart).forEach(k=>delete cart[k]);
-document.getElementById("customerName").value="";
-document.getElementById("mobile").value="";
-document.getElementById("address").value="";
-document.getElementById("landmark").value="";
-renderProducts();
-renderCart();
-}catch(e){
-message.textContent="Order save nahi hua: "+e.message;
-console.error("Order error:",e);
-}finally{
-btn.disabled=false;
-btn.textContent="Place Order";
-}
-};
 
 loadVegetables();
 </script>
