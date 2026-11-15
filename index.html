@@ -4,60 +4,83 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SabziKart Login Test</title>
+<title>SabziKart Admin</title>
 <style>
-body{font-family:Arial;background:#eff8f0;padding:20px}
-.box{max-width:400px;margin:60px auto;background:white;padding:25px;border-radius:15px}
+body{font-family:Arial;background:#eff8f0;margin:0;padding:20px}
+.box{max-width:500px;margin:20px auto;background:white;padding:22px;border-radius:15px;box-shadow:0 2px 12px #ccc}
 h2{text-align:center;color:#16833b}
-input,button{width:100%;padding:14px;margin-top:14px;box-sizing:border-box;font-size:16px;border-radius:8px}
+input,button{width:100%;padding:14px;margin-top:12px;box-sizing:border-box;font-size:16px;border-radius:8px}
 input{border:1px solid #bbb}
-button{background:#16833b;color:white;border:0}
+button{background:#16833b;color:white;border:0;font-weight:bold}
+.menu{background:#e8f5e9;color:#166534;text-align:left}
+#dashboard{display:none}
 #message{overflow-wrap:anywhere}
 </style>
 </head>
 <body>
-<div class="box">
-<h2>🥬 SabziKart</h2>
-<p>Admin Login Test</p>
+<div class="box" id="loginBox">
+<h2>🥬 SabziKart Admin</h2>
+<p>Admin Login</p>
 <input id="email" type="email" placeholder="Admin Email">
 <input id="password" type="password" placeholder="Password">
 <button id="login">Login</button>
 <p id="message"></p>
 </div>
 
+<div class="box" id="dashboard">
+<h2>🥬 SabziKart Dashboard</h2>
+<p>Welcome Admin!</p>
+<button class="menu">🥕 Manage Vegetables</button>
+<button class="menu">📦 Orders</button>
+<button class="menu">💰 Sales Report</button>
+<button class="menu">⚙️ Settings</button>
+<button id="logout" style="background:#d32f2f">Logout</button>
+</div>
+
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js";
+import {initializeApp} from "https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js";
+import {getAuth,signInWithEmailAndPassword,onAuthStateChanged,signOut}
+from "https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCX2bu-_yJHLf7LwuXQmsKq2nOJ4xOARwU",
-  authDomain: "sabzikart-46468.firebaseapp.com",
-  projectId: "sabzikart-46468",
-  storageBucket: "sabzikart-46468.firebasestorage.app",
-  messagingSenderId: "881977965995",
-  appId: "1:881977965995:web:2846b9e527feea48dee6ee",
-  measurementId: "G-FBL2F0P1H8"
+apiKey:"AIzaSyCX2bu-_yJHLf7LwuXQmsKq2nOJ4xOARwU",
+authDomain:"sabzikart-46468.firebaseapp.com",
+projectId:"sabzikart-46468",
+storageBucket:"sabzikart-46468.firebasestorage.app",
+messagingSenderId:"881977965995",
+appId:"1:881977965995:web:2846b9e527feea48dee6ee",
+measurementId:"G-FBL2F0P1H8"
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
 
-document.getElementById("login").addEventListener("click", async () => {
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value;
-  const message = document.getElementById("message");
+const loginBox=document.getElementById("loginBox");
+const dashboard=document.getElementById("dashboard");
+const message=document.getElementById("message");
 
-  message.textContent = "Login ho raha hai...";
+document.getElementById("login").onclick=async()=>{
+const email=document.getElementById("email").value.trim();
+const password=document.getElementById("password").value;
+message.textContent="Login ho raha hai...";
+try{
+await signInWithEmailAndPassword(auth,email,password);
+}catch(error){
+message.textContent=error.code+": "+error.message;
+}
+};
 
-  try {
-    await signInWithEmailAndPassword(auth, email, password);
-    message.textContent = "SabziKart Login Successful!";
-    message.style.color = "green";
-  } catch (error) {
-    message.textContent = error.code + ": " + error.message;
-    message.style.color = "red";
-  }
+onAuthStateChanged(auth,user=>{
+if(user){
+loginBox.style.display="none";
+dashboard.style.display="block";
+}else{
+loginBox.style.display="block";
+dashboard.style.display="none";
+}
 });
+
+document.getElementById("logout").onclick=()=>signOut(auth);
 </script>
 </body>
 </html>
