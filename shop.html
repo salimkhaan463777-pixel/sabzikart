@@ -8,13 +8,13 @@
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#f5f8f5;font-family:Arial,sans-serif;color:#222}
-header{background:#12833b;color:white;padding:17px;text-align:center}
-header h1{margin:0;font-size:25px}
+header{background:#12833b;color:white;padding:18px;text-align:center}
+header h1{margin:0;font-size:27px}
 header p{margin:6px 0 0;font-size:13px}
 .top{background:white;padding:12px;position:sticky;top:0;z-index:2;box-shadow:0 2px 8px #ddd}
-.top input{width:100%;padding:12px;border:1px solid #ddd;border-radius:10px}
+.top input{width:100%;padding:13px;border:1px solid #ddd;border-radius:10px}
 .container{max-width:850px;margin:auto;padding:14px}
-.banner{background:#e5f5e9;padding:16px;border-radius:14px;margin-bottom:15px}
+.banner{background:#e5f5e9;padding:17px;border-radius:14px;margin-bottom:15px}
 .banner h2{margin:0 0 6px;color:#12833b}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .card{background:white;border-radius:14px;padding:10px;border:1px solid #e8eee8;box-shadow:0 2px 8px #172b1710}
@@ -23,22 +23,22 @@ header p{margin:6px 0 0;font-size:13px}
 .price{font-weight:bold;color:#12833b;font-size:18px}
 .unit{font-size:12px;color:#777}
 .qty{display:flex;align-items:center;justify-content:center;gap:13px;margin-top:10px}
-.qty button{width:34px;height:34px;border:0;border-radius:8px;background:#16833b;color:white;font-size:21px}
+.qty button{width:36px;height:36px;border:0;border-radius:8px;background:#16833b;color:white;font-size:22px}
 .qty span{font-weight:bold}
 .cartbox,.checkout{background:white;padding:16px;border-radius:14px;margin-top:18px}
 .cartrow{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid #eee;padding:10px 0;font-size:14px}
-.totalrow{display:flex;justify-content:space-between;margin:10px 0}
+.totalrow{display:flex;justify-content:space-between;margin:11px 0}
 .grand{font-size:20px;font-weight:bold;color:#12833b}
-.checkout input,.checkout textarea{width:100%;padding:12px;margin:6px 0 12px;border:1px solid #ddd;border-radius:9px;font-size:15px}
+.checkout input,.checkout textarea{width:100%;padding:13px;margin:6px 0 12px;border:1px solid #ddd;border-radius:9px;font-size:15px}
 .checkout textarea{height:85px;resize:vertical}
-.mainbtn{width:100%;padding:14px;border:0;border-radius:10px;background:#12833b;color:white;font-size:16px;font-weight:bold}
+.mainbtn{width:100%;padding:15px;border:0;border-radius:10px;background:#12833b;color:white;font-size:16px;font-weight:bold}
+.mainbtn:disabled{opacity:.6}
 .note{font-size:12px;color:#777;line-height:1.5}
-#message{overflow-wrap:anywhere;color:#12833b}
+#message{overflow-wrap:anywhere;line-height:1.5}
 @media(min-width:600px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 </style>
 </head>
 <body>
-
 <header>
 <h1>🥬 SabziKart</h1>
 <p>Taazi Sabzi, Aapke Ghar Tak</p>
@@ -72,8 +72,9 @@ header p{margin:6px 0 0;font-size:13px}
 <input id="mobile" type="tel" maxlength="10" placeholder="10 digit mobile number">
 <textarea id="address" placeholder="Poora delivery address"></textarea>
 <input id="landmark" placeholder="Landmark (optional)">
-<h3>Payment Method</h3>
-<p>Cash on Delivery (COD)</p>
+<h3>💵 Payment Method</h3>
+<p><b>Cash on Delivery (COD)</b></p>
+<p class="note">Sabzi ghar pahunchne par cash payment karein.</p>
 <button class="mainbtn" id="placeOrder">Place Order</button>
 <p id="message"></p>
 </div>
@@ -85,7 +86,7 @@ import {getFirestore,collection,getDocs,addDoc}
 from "https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
 
 const firebaseConfig={
-apiKey:"AIzaSyCX2bu-_yJHLf7LwuXQmsKq2nOJ4xOARwU",
+apiKey:"AIzaSyCX2bu-_yJHLf7LwuXQmsKq2nOJ4xOARw",
 authDomain:"sabzikart-46468.firebaseapp.com",
 projectId:"sabzikart-46468",
 storageBucket:"sabzikart-46468.firebasestorage.app",
@@ -117,7 +118,6 @@ karela:"https://sunagriindustries.com/wp-content/uploads/2026/01/Bitter-Gourd-30
 };
 
 function photoFor(v){
-if(v.image && v.image.trim())return v.image;
 const s=(v.id+" "+v.name).toLowerCase();
 const keys={
 potato:["potato","aloo","आलू","બટાકા"],
@@ -144,7 +144,7 @@ function renderProducts(){
 const search=document.getElementById("search").value.toLowerCase();
 products.innerHTML="";
 const filtered=vegetables.filter(v=>
-v.available && (v.name||"").toLowerCase().includes(search)
+v.available && v.name.toLowerCase().includes(search)
 );
 if(!filtered.length){
 products.textContent="Is naam ki available sabzi nahi mili.";
@@ -153,33 +153,31 @@ return;
 filtered.forEach(v=>{
 const card=document.createElement("div");
 card.className="card";
-
 const img=document.createElement("img");
-img.src=photoFor(v);
+const photo=photoFor(v);
+if(photo){
+img.src=photo;
 img.alt=v.name;
-img.onerror=()=>{img.style.display="none";};
-
+img.onerror=()=>img.style.display="none";
+}else{
+img.style.display="none";
+}
 const name=document.createElement("h3");
 name.textContent=v.name;
-
 const price=document.createElement("div");
 price.className="price";
 price.textContent="₹"+v.price;
-
 const unit=document.createElement("div");
 unit.className="unit";
 unit.textContent="Per kg";
-
 const qty=document.createElement("div");
 qty.className="qty";
-
 const minus=document.createElement("button");
 minus.textContent="−";
 const count=document.createElement("span");
 count.textContent=cart[v.id]||0;
 const plus=document.createElement("button");
 plus.textContent="+";
-
 minus.onclick=()=>{
 cart[v.id]=Math.max(0,(cart[v.id]||0)-1);
 count.textContent=cart[v.id];
@@ -190,7 +188,6 @@ cart[v.id]=(cart[v.id]||0)+1;
 count.textContent=cart[v.id];
 renderCart();
 };
-
 qty.append(minus,count,plus);
 card.append(img,name,price,unit,qty);
 products.append(card);
@@ -205,14 +202,14 @@ let count=0;
 vegetables.forEach(v=>{
 const q=cart[v.id]||0;
 if(q>0){
-subtotal+=Number(v.price)*q;
+subtotal+=v.price*q;
 count+=q;
 const row=document.createElement("div");
 row.className="cartrow";
 const label=document.createElement("span");
 label.textContent=v.name+" × "+q+" kg";
 const amount=document.createElement("b");
-amount.textContent="₹"+(Number(v.price)*q);
+amount.textContent="₹"+(v.price*q);
 row.append(label,amount);
 cartItems.append(row);
 }
@@ -227,7 +224,16 @@ document.getElementById("grand").textContent="₹"+(subtotal+delivery);
 async function loadVegetables(){
 try{
 const snap=await getDocs(collection(db,"vegetables"));
-vegetables=snap.docs.map(d=>({id:d.id,...d.data()}));
+vegetables=snap.docs.map(d=>{
+const data=d.data();
+const price=Number(data.price);
+return {
+id:d.id,
+name:typeof data.name==="string"&&data.name.trim()?data.name.trim():d.id,
+price:price,
+available:data.available===true
+};
+}).filter(v=>Number.isFinite(v.price)&&v.price>=0);
 renderProducts();
 renderCart();
 }catch(e){
@@ -246,11 +252,14 @@ const items=[];
 let subtotal=0;
 
 vegetables.forEach(v=>{
-const q=cart[v.id]||0;
+const q=Number(cart[v.id]||0);
 if(q>0){
+if(!v.name||!Number.isFinite(v.price)){
+throw new Error("Sabzi ka naam ya price missing hai: "+v.id);
+}
 items.push({
-vegetableId:v.id,
-name:v.name,
+vegetableId:String(v.id),
+name:String(v.name),
 price:Number(v.price),
 quantity:q,
 lineTotal:Number(v.price)*q
@@ -268,32 +277,38 @@ return;
 const delivery=subtotal<=100?20:0;
 const total=subtotal+delivery;
 const btn=document.getElementById("placeOrder");
+const message=document.getElementById("message");
 btn.disabled=true;
 btn.textContent="Order bheja ja raha hai...";
+message.textContent="";
 
 try{
-const result=await addDoc(collection(db,"orders"),{
-customerName:name,
-mobile:mobile,
-address:address,
-landmark:landmark,
+const orderData={
+customerName:String(name),
+mobile:String(mobile),
+address:String(address),
+landmark:String(landmark),
 items:items,
-subtotal:subtotal,
-deliveryCharge:delivery,
-total:total,
+subtotal:Number(subtotal),
+deliveryCharge:Number(delivery),
+total:Number(total),
 paymentMethod:"COD",
 status:"Pending",
 createdAt:new Date().toISOString()
-});
-document.getElementById("message").textContent=
-"Order request tayyar hui. Order ID: "+result.id;
+};
+
+await addDoc(collection(db,"orders"),orderData);
+message.textContent="✅ Order successfully save ho gaya!";
 Object.keys(cart).forEach(k=>delete cart[k]);
+document.getElementById("customerName").value="";
+document.getElementById("mobile").value="";
+document.getElementById("address").value="";
+document.getElementById("landmark").value="";
 renderProducts();
 renderCart();
 }catch(e){
-document.getElementById("message").textContent=
-"Order save nahi hua: "+e.message+
-". Admin se security rules update karwane honge.";
+message.textContent="Order save nahi hua: "+e.message;
+console.error("Order error:",e);
 }finally{
 btn.disabled=false;
 btn.textContent="Place Order";
