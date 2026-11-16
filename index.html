@@ -1,362 +1,325 @@
+
 <!DOCTYPE html>
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>SabziKart Admin</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#f2f7f2;font-family:Arial,sans-serif;color:#243126}
+body{margin:0;background:#f2f7f2;font-family:Arial;color:#243126}
 header{background:#13843e;color:white;padding:17px}
-.header{max-width:900px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:10px}
-.logo{font-size:23px;font-weight:bold}
-main{max-width:900px;margin:auto;padding:14px}
-.card{background:white;padding:15px;border-radius:15px;margin:12px 0;box-shadow:0 2px 12px #0000000c}
-input{width:100%;padding:13px;border:1px solid #dce5dc;border-radius:9px;margin:7px 0;font-size:15px}
-button{border:0;border-radius:9px;padding:11px 14px;background:#16843e;color:white;font-weight:bold;font-size:14px}
+.header,main{max-width:900px;margin:auto}
+.header{display:flex;justify-content:space-between;align-items:center}
+main{padding:14px}
+.card{background:white;padding:15px;border-radius:14px;margin:12px 0;box-shadow:0 2px 10px #0001}
+input{width:100%;padding:13px;border:1px solid #ddd;border-radius:9px;margin:7px 0;font-size:15px}
+button{border:0;border-radius:9px;padding:12px;background:#16843e;color:white;font-weight:bold}
 button:disabled{opacity:.5}
 .secondary{background:#e8f4eb;color:#176b36}
 .danger{background:#ffe9e9;color:#b42318}
-.tabs{display:flex;gap:8px;margin:15px 0}
-.tabs button{flex:1;padding:13px 5px}
-.tabs .active{background:#105f2e}
 .hidden{display:none!important}
-.veg{display:flex;align-items:center;gap:12px}
-.veg img{width:76px;height:76px;object-fit:contain;border-radius:10px;background:#f6f8f6}
-.veg-info{flex:1;min-width:0}
-.veg-info b{display:block;margin-bottom:6px}
-.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
-.actions button{font-size:12px;padding:9px}
-.order-top{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
-.order-id{font-size:11px;color:#778277;overflow-wrap:anywhere}
-.status{display:inline-block;padding:6px 10px;border-radius:20px;background:#fff2d8;color:#895900;font-size:12px;font-weight:bold}
-.status.done{background:#e3f7e8;color:#167238}
-.order-line{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid #edf1ed;font-size:14px}
-.info{background:#f5faf5;padding:12px;border-radius:10px;line-height:1.8;font-size:14px;overflow-wrap:anywhere;margin-top:10px}
-.total{font-size:18px;font-weight:bold;color:#14803b}
+.tabs{display:flex;gap:8px;margin:15px 0}
+.tabs button{flex:1}
+.tabs .active{background:#105f2e}
 .small{font-size:12px;color:#738073}
-.empty{text-align:center;padding:25px;color:#748074}
-h2{font-size:20px}
-h3{margin:8px 0 12px}
-#vegetableList{
- display:grid;
- grid-template-columns:repeat(2,minmax(0,1fr));
- gap:12px;
-}
-#vegetableList .card{margin:0;padding:10px}
-#vegetableList .veg{flex-direction:column;align-items:flex-start}
-#vegetableList .veg img{width:100%;height:100px}
-#vegetableList .actions button{flex:1 1 100%}
+.empty{text-align:center;padding:20px;color:#777}
+.veg img{width:100%;height:110px;object-fit:contain}
+#vegetableList{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+#vegetableList .card{margin:0}
+.actions{display:flex;flex-direction:column;gap:7px;margin-top:10px}
+.actions button{width:100%}
+.info{background:#f5faf5;padding:12px;border-radius:10px;line-height:1.8;margin-top:10px;overflow-wrap:anywhere}
+.order-line{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid #eee}
+.total{font-size:19px;font-weight:bold;color:#14803b}
+.status{display:inline-block;padding:6px 10px;background:#fff0d4;color:#865900;border-radius:20px;font-size:12px}
+.done{background:#e3f7e8;color:#167238}
 @media(max-width:340px){#vegetableList{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <header>
- <div class="header">
-  <div>
-   <div class="logo">🥬 SabziKart Admin</div>
-   <div style="font-size:12px;margin-top:4px">Manage Vegetables & Orders</div>
-  </div>
-  <button id="logoutBtn" class="hidden">Logout</button>
- </div>
+<div class="header">
+<div><b style="font-size:23px">🥬 SabziKart Admin</b><div class="small" style="color:white">Manage Vegetables & Orders</div></div>
+<button id="logoutBtn" class="hidden">Logout</button>
+</div>
 </header>
 <main>
 <section id="loginArea" class="card">
- <h2>Admin Login</h2>
- <p class="small">Apne Admin account se login karein.</p>
- <input id="email" type="email" placeholder="Admin Email">
- <input id="password" type="password" placeholder="Password">
- <button id="loginBtn" style="width:100%">Login</button>
- <p id="loginMessage" class="small"></p>
+<h2>Admin Login</h2>
+<input id="email" type="email" placeholder="Admin Email">
+<input id="password" type="password" placeholder="Password">
+<button id="loginBtn" style="width:100%">Login</button>
+<p id="loginMessage" class="small"></p>
 </section>
+
 <section id="dashboard" class="hidden">
- <div class="tabs">
-  <button id="vegetableTab" class="active">🥬 Sabziyan</button>
-  <button id="ordersTab">📦 Orders</button>
- </div>
- <section id="vegetableSection">
-  <div class="card">
-   <h3>➕ Nayi Sabzi Add Karein</h3>
-   <input id="newName" placeholder="Sabzi ka naam">
-   <input id="newPrice" type="number" min="0" placeholder="Price per kg (₹)">
-   <button id="addVegBtn" style="width:100%">Add Vegetable</button>
-   <p id="vegMessage" class="small"></p>
-  </div>
-  <h3>Sabziyon ki List</h3>
-  <div id="vegetableList"><div class="empty">Loading...</div></div>
- </section>
- <section id="ordersSection" class="hidden">
-  <div class="card">
-   <div class="order-top">
-    <div>
-     <h3 style="margin:0">📦 Customer Orders</h3>
-     <p class="small">Naye aur purane orders yahan dekhein.</p>
-    </div>
-    <button id="refreshOrders" class="secondary">Refresh</button>
-   </div>
-   <h2 id="orderCount">0 Orders</h2>
-  </div>
-  <div id="ordersList"><div class="empty">Orders load ho rahe hain...</div></div>
- </section>
+<div class="tabs">
+<button id="vegetableTab" class="active">🥬 Sabziyan</button>
+<button id="ordersTab">📦 Orders</button>
+</div>
+
+<section id="vegetableSection">
+<div class="card">
+<h3>➕ Nayi Sabzi Add Karein</h3>
+<input id="newName" placeholder="Sabzi ka naam">
+<input id="newPrice" type="number" min="0" placeholder="Price per kg ₹">
+<button id="addVegBtn" style="width:100%">Add Vegetable</button>
+<p id="vegMessage" class="small"></p>
+</div>
+<h3>Sabziyon ki List</h3>
+<div id="vegetableList"><div class="empty">Loading...</div></div>
+</section>
+
+<section id="ordersSection" class="hidden">
+<div class="card">
+<h3>📦 Customer Orders</h3>
+<button id="refreshOrders" class="secondary">Refresh Orders</button>
+<h2 id="orderCount">0 Orders</h2>
+</div>
+<div id="ordersList"></div>
+</section>
 </section>
 </main>
+
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js";
-import {
- getAuth,signInWithEmailAndPassword,onAuthStateChanged,signOut
-} from "https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js";
-import {
- getFirestore,collection,getDocs,getDoc,addDoc,updateDoc,deleteDoc,doc
-} from "https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
+import {getAuth,signInWithEmailAndPassword,onAuthStateChanged,signOut}
+from "https://www.gstatic.com/firebasejs/13.3.0/firebase-auth.js";
+import {getFirestore,collection,getDocs,addDoc,updateDoc,deleteDoc,doc,getDoc}
+from "https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyB6X_lgz5mk26WED1WicBEI1R3cpKAwm5M",
-  authDomain: "sabzikart-46468.firebaseapp.com",
-  projectId: "sabzikart-46468",
-  storageBucket: "sabzikart-46468.firebasestorage.app",
-  messagingSenderId: "881977965995",
-  appId: "1:881977965995:web:2846b9e527feea48dee6ee",
-  measurementId: "G-FBL2F0P1H8"
+const firebaseConfig={
+apiKey:"AIzaSyCX2bu-_yJHLf7LwuXQmsKq2nOJ4xOARw",
+authDomain:"sabzikart-46468.firebaseapp.com",
+projectId:"sabzikart-46468",
+storageBucket:"sabzikart-46468.firebasestorage.app",
+messagingSenderId:"881977965995",
+appId:"1:881977965995:web:2846b9e527feea48dee6ee",
+measurementId:"G-FBL2F0P1H8"
 };
+
 const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);
 const db=getFirestore(app);
 const ADMIN_UID="xxJA2bzR9mUCIWTaiFHrS1vG5F03";
 
 const photos={
- potato:"https://sunagriindustries.com/wp-content/uploads/2026/01/Potato-300X300.jpeg",
- tomato:"https://sunagriindustries.com/wp-content/uploads/2026/01/Tomato-300X300-2.jpg",
- onion:"https://sunagriindustries.com/wp-content/uploads/2026/01/Onion-300X300.jpg",
- cauliflower:"https://sunagriindustries.com/wp-content/uploads/2026/01/Cauliflower-300X300.jpg",
- cabbage:"https://sunagriindustries.com/wp-content/uploads/2026/01/Cabbage-300X300.jpg",
- brinjal:"https://sunagriindustries.com/wp-content/uploads/2026/01/Brinjal-300X300.jpg",
- bhindi:"https://sunagriindustries.com/wp-content/uploads/2026/01/Okra-300X300.jpg",
- peas:"https://sunagriindustries.com/wp-content/uploads/2026/01/Peas-300X300.jpg",
- beans:"https://sunagriindustries.com/wp-content/uploads/2026/01/Beans-300X300.jpg",
- spinach:"https://sunagriindustries.com/wp-content/uploads/2026/01/Spinach-300X300.jpeg",
- carrot:"https://sunagriindustries.com/wp-content/uploads/2026/01/Carrot-300X300.jpg",
- radish:"https://sunagriindustries.com/wp-content/uploads/2026/01/Radish-300x300-1.jpg",
- beetroot:"https://sunagriindustries.com/wp-content/uploads/2026/01/Beetroot-300X300.jpeg",
- pumpkin:"https://sunagriindustries.com/wp-content/uploads/2026/01/Pumpkin-300X300.jpg",
- karela:"https://sunagriindustries.com/wp-content/uploads/2026/01/Bitter-Gourd-300X300.jpg",
- lauki:"https://sunagriindustries.com/wp-content/uploads/2026/01/Bottle-Gourd-300X300.jpg",
- drumstick:"https://sunagriindustries.com/wp-content/uploads/2026/01/Drumstick-300X300-2.jpg",
- cucumber:"https://sunagriindustries.com/wp-content/uploads/2026/01/Cucumber-300X300.jpg",
- chilli:"https://sunagriindustries.com/wp-content/uploads/2026/01/Green-Chillies-300X300.jpg",
- garlic:"https://sunagriindustries.com/wp-content/uploads/2026/01/Garlic-300X300-1.jpg",
- turai:"https://sunagriindustries.com/wp-content/uploads/2026/01/Ridge-Gourd-300X300.jpg"
+potato:"https://sunagriindustries.com/wp-content/uploads/2026/01/Potato-300X300.jpeg",
+tomato:"https://sunagriindustries.com/wp-content/uploads/2026/01/Tomato-300X300-2.jpg",
+onion:"https://sunagriindustries.com/wp-content/uploads/2026/01/Onion-300X300.jpg",
+cauliflower:"https://sunagriindustries.com/wp-content/uploads/2026/01/Cauliflower-300X300.jpg",
+cabbage:"https://sunagriindustries.com/wp-content/uploads/2026/01/Cabbage-300X300.jpg",
+brinjal:"https://sunagriindustries.com/wp-content/uploads/2026/01/Brinjal-300X300.jpg",
+bhindi:"https://sunagriindustries.com/wp-content/uploads/2026/01/Okra-300X300.jpg",
+peas:"https://sunagriindustries.com/wp-content/uploads/2026/01/Peas-300X300.jpg",
+beans:"https://sunagriindustries.com/wp-content/uploads/2026/01/Beans-300X300.jpg",
+spinach:"https://sunagriindustries.com/wp-content/uploads/2026/01/Spinach-300X300.jpeg",
+carrot:"https://sunagriindustries.com/wp-content/uploads/2026/01/Carrot-300X300.jpg",
+radish:"https://sunagriindustries.com/wp-content/uploads/2026/01/Radish-300x300-1.jpg",
+beetroot:"https://sunagriindustries.com/wp-content/uploads/2026/01/Beetroot-300X300.jpeg",
+pumpkin:"https://sunagriindustries.com/wp-content/uploads/2026/01/Pumpkin-300X300.jpg",
+karela:"https://sunagriindustries.com/wp-content/uploads/2026/01/Bitter-Gourd-300X300.jpg",
+lauki:"https://sunagriindustries.com/wp-content/uploads/2026/01/Bottle-Gourd-300X300.jpg",
+drumstick:"https://sunagriindustries.com/wp-content/uploads/2026/01/Drumstick-300X300-2.jpg",
+cucumber:"https://sunagriindustries.com/wp-content/uploads/2026/01/Cucumber-300X300.jpg",
+chilli:"https://sunagriindustries.com/wp-content/uploads/2026/01/Green-Chillies-300X300.jpg",
+garlic:"https://sunagriindustries.com/wp-content/uploads/2026/01/Garlic-300X300-1.jpg",
+turai:"https://sunagriindustries.com/wp-content/uploads/2026/01/Ridge-Gourd-300X300.jpg"
 };
-const aliases=[
- ["potato",["potato","aloo","आलू","બટાકા"]],
- ["tomato",["tomato","tamatar","टमाटर","ટામેટા"]],
- ["onion",["onion","pyaz","प्याज","ડુંગળી"]],
- ["cauliflower",["cauliflower","phool gobhi","फूलगोभी"]],
- ["cabbage",["cabbage","patta gobhi","पत्तागोभी"]],
- ["brinjal",["brinjal","baingan","बैंगन","રીંગણ"]],
- ["bhindi",["bhindi","okra","भिंडी","ભીંડા"]],
- ["peas",["peas","matar","मटर","વટાણા"]],
- ["beans",["beans","सेम","ફણસી"]],
- ["spinach",["spinach","palak","पालक","પાલક"]],
- ["carrot",["carrot","gajar","गाजर","ગાજર"]],
- ["radish",["radish","mooli","मूली","મૂળા"]],
- ["beetroot",["beetroot","chukandar","चुकंदर","બીટ"]],
- ["pumpkin",["pumpkin","kaddu","कद्दू","કોળું"]],
- ["karela",["karela","bitter gourd","करेला","કારેલા"]],
- ["lauki",["lauki","bottle gourd","दूधी","लौकी"]],
- ["drumstick",["drumstick","sahjan","सहजन","સરગવો"]],
- ["cucumber",["cucumber","kheera","खीरा","કાકડી"]],
- ["chilli",["chilli","mirchi","मिर्च","મરચાં"]],
- ["garlic",["garlic","lahsun","लहसुन","લસણ"]],
- ["turai",["turai","ridge gourd","तुरई","તુરીયા"]]
-];
+
+const aliases={
+potato:["potato","aloo","आलू","બટાકા"],
+tomato:["tomato","tamatar","टमाटर","ટામેટા"],
+onion:["onion","pyaz","प्याज","ડુંગળી"],
+cauliflower:["cauliflower","phool gobhi","फूलगोभी"],
+cabbage:["cabbage","patta gobhi","पत्तागोभी"],
+brinjal:["brinjal","baingan","बैंगन","રીંગણ"],
+bhindi:["bhindi","okra","भिंडी","ભીંડા"],
+peas:["peas","matar","मटर","વટાણા"],
+beans:["beans","सेम","ફણસી"],
+spinach:["spinach","palak","पालक"],
+carrot:["carrot","gajar","गाजर"],
+radish:["radish","mooli","मूली"],
+beetroot:["beetroot","chukandar","चुकंदर"],
+pumpkin:["pumpkin","kaddu","कद्दू"],
+karela:["karela","bitter gourd","करेला"],
+lauki:["lauki","bottle gourd","दूधी","लौकी"],
+drumstick:["drumstick","sahjan","सहजन"],
+cucumber:["cucumber","kheera","खीरा"],
+chilli:["chilli","mirchi","मिर्च"],
+garlic:["garlic","lahsun","लहसुन"],
+turai:["turai","ridge gourd","तुरई"]
+};
+
 function esc(v){
- return String(v??"").replace(/[&<>"']/g,c=>({
- "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
- }[c]));
+return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 }
 function money(n){
- return "₹"+Number(n||0).toFixed(2).replace(/\.00$/,"");
+return "₹"+Number(n||0).toFixed(2).replace(/\.00$/,"");
 }
 function photoFor(v){
- if(typeof v.image==="string"&&v.image.trim())return v.image.trim();
- const s=(v.id+" "+v.name).toLowerCase();
- for(const [key,words] of aliases){
-  if(words.some(w=>s.includes(w)))return photos[key];
- }
- return "";
+if(v.image)return v.image;
+let s=(v.id+" "+v.name).toLowerCase();
+for(const [key,words] of Object.entries(aliases)){
+if(words.some(w=>s.includes(w)))return photos[key]||"";
 }
-const loginArea=document.getElementById("loginArea");
-const dashboard=document.getElementById("dashboard");
-const loginMessage=document.getElementById("loginMessage");
+return "";
+}
 
-document.getElementById("loginBtn").onclick=async()=>{
- const email=document.getElementById("email").value.trim();
- const password=document.getElementById("password").value;
- loginMessage.textContent="Login ho raha hai...";
- try{await signInWithEmailAndPassword(auth,email,password);}
- catch(e){loginMessage.textContent="Login error: "+e.message;}
+const $=id=>document.getElementById(id);
+$("loginBtn").onclick=async()=>{
+$("loginMessage").textContent="Login ho raha hai...";
+try{
+await signInWithEmailAndPassword(auth,$("email").value.trim(),$("password").value);
+}catch(e){$("loginMessage").textContent="Login error: "+e.message;}
 };
+
 onAuthStateChanged(auth,async user=>{
- if(user&&user.uid===ADMIN_UID){
-  loginArea.classList.add("hidden");
-  dashboard.classList.remove("hidden");
-  document.getElementById("logoutBtn").classList.remove("hidden");
-  await loadVegetables();
-  await loadOrders();
- }else{
-  dashboard.classList.add("hidden");
-  document.getElementById("logoutBtn").classList.add("hidden");
-  loginArea.classList.remove("hidden");
-  if(user){
-   loginMessage.textContent="Yeh account Admin account nahi hai.";
-   await signOut(auth);
-  }
- }
+if(user&&user.uid===ADMIN_UID){
+$("loginArea").classList.add("hidden");
+$("dashboard").classList.remove("hidden");
+$("logoutBtn").classList.remove("hidden");
+await loadVegetables();
+await loadOrders();
+}else{
+$("dashboard").classList.add("hidden");
+$("logoutBtn").classList.add("hidden");
+$("loginArea").classList.remove("hidden");
+if(user){
+$("loginMessage").textContent="Yeh account Admin account nahi hai.";
+await signOut(auth);
+}
+}
 });
-document.getElementById("logoutBtn").onclick=()=>signOut(auth);
-document.getElementById("vegetableTab").onclick=()=>{
- document.getElementById("vegetableSection").classList.remove("hidden");
- document.getElementById("ordersSection").classList.add("hidden");
- document.getElementById("vegetableTab").classList.add("active");
- document.getElementById("ordersTab").classList.remove("active");
+$("logoutBtn").onclick=()=>signOut(auth);
+
+$("vegetableTab").onclick=()=>{
+$("vegetableSection").classList.remove("hidden");
+$("ordersSection").classList.add("hidden");
+$("vegetableTab").classList.add("active");
+$("ordersTab").classList.remove("active");
 };
-document.getElementById("ordersTab").onclick=async()=>{
- document.getElementById("vegetableSection").classList.add("hidden");
- document.getElementById("ordersSection").classList.remove("hidden");
- document.getElementById("ordersTab").classList.add("active");
- document.getElementById("vegetableTab").classList.remove("active");
- await loadOrders();
+$("ordersTab").onclick=async()=>{
+$("vegetableSection").classList.add("hidden");
+$("ordersSection").classList.remove("hidden");
+$("ordersTab").classList.add("active");
+$("vegetableTab").classList.remove("active");
+await loadOrders();
 };
-document.getElementById("refreshOrders").onclick=loadOrders;
+$("refreshOrders").onclick=loadOrders;
 
 async function loadVegetables(){
- const box=document.getElementById("vegetableList");
- box.innerHTML='<div class="empty">Loading...</div>';
- try{
-  const snap=await getDocs(collection(db,"vegetables"));
-  if(snap.empty){box.innerHTML='<div class="empty">Abhi koi sabzi nahi hai.</div>';return;}
-  box.innerHTML=snap.docs.map(d=>{
-   const v=d.data();
-   const image=photoFor({id:d.id,name:v.name||d.id,image:v.image});
-   return `<div class="card">
-    <div class="veg">
-     ${image?`<img src="${esc(image)}" alt="${esc(v.name||d.id)}" onerror="this.style.display='none'">`:""}
-     <div class="veg-info">
-      <b>${esc(v.name||d.id)}</b>
-      <span>${money(v.price)} / kg</span><br>
-      <span class="small">${v.available===true?"Available":"Unavailable"}</span>
-     </div>
-    </div>
-    <div class="actions">
-     <button class="secondary" onclick="editPrice('${esc(d.id)}',${Number(v.price)||0})">Update Price</button>
-     <button class="secondary" onclick="toggleVeg('${esc(d.id)}',${v.available===true})">${v.available===true?"Unavailable karein":"Available karein"}</button>
-     <button class="danger" onclick="removeVeg('${esc(d.id)}')">Delete</button>
-    </div>
-   </div>`;
-  }).join("");
- }catch(e){box.innerHTML='<div class="empty">Sabzi load error: '+esc(e.message)+'</div>';}
+const box=$("vegetableList");
+box.innerHTML='<div class="empty">Loading...</div>';
+try{
+const snap=await getDocs(collection(db,"vegetables"));
+if(snap.empty){box.innerHTML='<div class="empty">Abhi koi sabzi nahi hai.</div>';return;}
+box.innerHTML=snap.docs.map(d=>{
+const v=d.data(),image=photoFor({id:d.id,name:v.name||d.id,image:v.image});
+return `<div class="card"><div class="veg">
+${image?`<img src="${esc(image)}" alt="">`:""}
+<b>${esc(v.name||d.id)}</b>
+<p>${money(v.price)} / kg</p>
+<p class="small">${v.available===true?"Available":"Unavailable"}</p>
+</div><div class="actions">
+<button class="secondary" onclick="editPrice('${esc(d.id)}',${Number(v.price)||0})">Update Price</button>
+<button class="secondary" onclick="toggleVeg('${esc(d.id)}',${v.available===true})">${v.available===true?"Unavailable karein":"Available karein"}</button>
+<button class="danger" onclick="removeVeg('${esc(d.id)}')">Delete</button>
+</div></div>`;
+}).join("");
+}catch(e){box.innerHTML='<div class="empty">Sabzi load error: '+esc(e.message)+'</div>';}
 }
-document.getElementById("addVegBtn").onclick=async()=>{
- const name=document.getElementById("newName").value.trim();
- const price=Number(document.getElementById("newPrice").value);
- const msg=document.getElementById("vegMessage");
- if(name.length<2||!Number.isFinite(price)||price<0){msg.textContent="Sahi naam aur price bharein.";return;}
- try{
-  await addDoc(collection(db,"vegetables"),{name,price,available:true});
-  document.getElementById("newName").value="";
-  document.getElementById("newPrice").value="";
-  msg.textContent="Sabzi add ho gayi!";
-  await loadVegetables();
- }catch(e){msg.textContent="Error: "+e.message;}
+
+$("addVegBtn").onclick=async()=>{
+const name=$("newName").value.trim(),price=Number($("newPrice").value);
+if(name.length<2||!Number.isFinite(price)||price<0){$("vegMessage").textContent="Sahi naam aur price bharein.";return;}
+try{
+await addDoc(collection(db,"vegetables"),{name,price,available:true});
+$("newName").value="";$("newPrice").value="";
+$("vegMessage").textContent="Sabzi add ho gayi!";
+await loadVegetables();
+}catch(e){$("vegMessage").textContent="Error: "+e.message;}
 };
+
 window.editPrice=async(id,current)=>{
- const answer=prompt("Nayi price per kg likhein:",current);
- if(answer===null)return;
- const price=Number(answer);
- if(!Number.isFinite(price)||price<0){alert("Sahi price likhein.");return;}
- try{await updateDoc(doc(db,"vegetables",id),{price});await loadVegetables();}
- catch(e){alert("Price update nahi hui: "+e.message);}
+const answer=prompt("Nayi price per kg:",current);
+if(answer===null)return;
+const price=Number(answer);
+if(!Number.isFinite(price)||price<0){alert("Sahi price likhein.");return;}
+try{await updateDoc(doc(db,"vegetables",id),{price});await loadVegetables();}
+catch(e){alert("Price update nahi hui: "+e.message);}
 };
 window.toggleVeg=async(id,current)=>{
- try{await updateDoc(doc(db,"vegetables",id),{available:!current});await loadVegetables();}
- catch(e){alert("Update nahi hua: "+e.message);}
+try{await updateDoc(doc(db,"vegetables",id),{available:!current});await loadVegetables();}
+catch(e){alert(e.message);}
 };
 window.removeVeg=async id=>{
- if(!confirm("Kya aap is sabzi ko delete karna chahte hain?"))return;
- try{await deleteDoc(doc(db,"vegetables",id));await loadVegetables();}
- catch(e){alert("Delete nahi hua: "+e.message);}
+if(!confirm("Kya aap is sabzi ko delete karna chahte hain?"))return;
+try{await deleteDoc(doc(db,"vegetables",id));await loadVegetables();}
+catch(e){alert(e.message);}
 };
 
 async function loadOrders(){
- const box=document.getElementById("ordersList");
- box.innerHTML='<div class="empty">Orders load ho rahe hain...</div>';
- try{
-  const snap=await getDocs(collection(db,"orders"));
-  const orders=snap.docs.map(d=>({id:d.id,...d.data()}));
-  orders.sort((a,b)=>String(b.createdAt||"").localeCompare(String(a.createdAt||"")));
-  document.getElementById("orderCount").textContent=orders.length+" Orders";
-  if(!orders.length){box.innerHTML='<div class="card empty">Abhi koi order nahi aaya hai.</div>';return;}
-  box.innerHTML=orders.map(o=>{
-   const items=Array.isArray(o.items)?o.items:[];
-   const delivered=o.status==="Delivered";
-   const date=o.createdAt?new Date(o.createdAt).toLocaleString("en-IN"):"";
-   return `<div class="card">
-    <div class="order-top">
-     <div>
-      <b>Order #${esc(o.id.slice(0,9))}</b>
-      <div class="order-id">${esc(date)}</div>
-     </div>
-     <span class="status ${delivered?"done":""}">${esc(o.status||"Pending")}</span>
-    </div>
-    <h3>👤 Customer Details</h3>
-    <div class="info">
-     <b>Naam:</b> ${esc(o.customerName||"")}<br>
-     <b>Mobile:</b> ${esc(o.mobile||"")}<br>
-     <b>Address:</b> ${esc(o.address||"")}<br>
-     <b>Landmark:</b> ${esc(o.landmark||"Nahi diya")}
-    </div>
-    <h3>🧺 Ordered Vegetables</h3>
-    ${items.length?items.map(v=>`
-     <div class="order-line">
-      <span>${esc(v.name||"Sabzi")} × ${esc(v.quantity)} kg<br><small>${money(v.price)} per kg</small></span>
-      <b>${money(v.lineTotal)}</b>
-     </div>`).join(""):'<p class="small">Items ki details nahi mili.</p>'}
-    <h3>Bill Details</h3>
-    <div class="order-line"><span>Sabzi ka total</span><b>${money(o.subtotal)}</b></div>
-    <div class="order-line"><span>Delivery charge</span><b>${Number(o.deliveryCharge)===0?"FREE":money(o.deliveryCharge)}</b></div>
-    <div class="order-line total"><span>Grand Total</span><span>${money(o.total)}</span></div>
-    <div class="info">
-     <b>Payment:</b> ${esc(o.paymentMethod||"COD")}<br>
-     <b>Order Status:</b> ${esc(o.status||"Pending")}
-    </div>
-    <button data-order-id="${esc(o.id)}" style="width:100%;margin-top:12px" onclick="window.changeOrderStatus(this.dataset.orderId,'${delivered?"Pending":"Delivered"}')">
-     ${delivered?"Mark as Pending":"✓ Mark as Delivered"}
-    </button>
-   </div>`;
-  }).join("");
- }catch(e){
-  box.innerHTML='<div class="card empty">Orders load nahi hue: '+esc(e.message)+'</div>';
- }
+const box=$("ordersList");
+box.innerHTML='<div class="empty">Orders load ho rahe hain...</div>';
+try{
+const snap=await getDocs(collection(db,"orders"));
+const orders=snap.docs.map(d=>({id:d.id,...d.data()}));
+orders.sort((a,b)=>String(b.createdAt||"").localeCompare(String(a.createdAt||"")));
+$("orderCount").textContent=orders.length+" Orders";
+if(!orders.length){box.innerHTML='<div class="card empty">Abhi koi order nahi aaya hai.</div>';return;}
+
+box.innerHTML=orders.map(o=>{
+const items=Array.isArray(o.items)?o.items:[];
+const status=o.status||"Pending";
+const date=o.createdAt?new Date(o.createdAt).toLocaleString("en-IN"):"";
+let next=status==="Pending"?"Confirmed":status==="Confirmed"?"Delivered":"Pending";
+let button=status==="Delivered"?"Mark as Pending":status==="Confirmed"?"✓ Mark as Delivered":"✓ Confirm Order";
+return `<div class="card">
+<div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap">
+<b>Order #${esc(o.id.slice(0,9))}</b>
+<span class="status ${status==="Delivered"?"done":""}">${esc(status)}</span>
+</div>
+<p class="small">${esc(date)}</p>
+<h3>👤 Customer Details</h3>
+<div class="info">
+<b>Naam:</b> ${esc(o.customerName||"")}<br>
+<b>Mobile:</b> ${esc(o.mobile||"")}<br>
+<b>Address:</b> ${esc(o.address||"")}<br>
+<b>Landmark:</b> ${esc(o.landmark||"Nahi diya")}
+</div>
+<h3>🧺 Ordered Vegetables</h3>
+${items.map(v=>`<div class="order-line"><span>${esc(v.name)} × ${esc(v.quantity)} kg<br><small>${money(v.price)} per kg</small></span><b>${money(v.lineTotal)}</b></div>`).join("")}
+<h3>Bill Details</h3>
+<div class="order-line"><span>Sabzi ka total</span><b>${money(o.subtotal)}</b></div>
+<div class="order-line"><span>Delivery charge</span><b>${Number(o.deliveryCharge)===0?"FREE":money(o.deliveryCharge)}</b></div>
+<div class="order-line total"><span>Grand Total</span><span>${money(o.total)}</span></div>
+<div class="info">
+<b>Payment:</b> ${esc(o.paymentMethod||"COD")}<br>
+<b>Payment Status:</b> ${esc(o.paymentStatus||"Pending")}<br>
+<b>Order Status:</b> ${esc(status)}
+</div>
+<button style="width:100%;margin-top:12px" data-id="${esc(o.id)}" onclick="changeOrderStatus(this.dataset.id,'${next}')">${button}</button>
+</div>`;
+}).join("");
+}catch(e){box.innerHTML='<div class="card empty">Orders load nahi hue: '+esc(e.message)+'</div>';}
 }
 
 window.changeOrderStatus=async(id,status)=>{
- const button=document.querySelector(`#ordersList button[data-order-id="${CSS.escape(id)}"]`);
- if(button){button.disabled=true;button.textContent="Updating...";}
- try{
-  if(!auth.currentUser||auth.currentUser.uid!==ADMIN_UID){
-   throw new Error("Admin login verify nahi hua. Dobara login karein.");
-  }
-  await updateDoc(doc(db,"orders",id),{status:status});
-  const updated=await getDoc(doc(db,"orders",id));
-  if(!updated.exists()||updated.data().status!==status){
-   throw new Error("Firebase mein status save hone ki tasdeeq nahi hui.");
-  }
-  await loadOrders();
-  alert("Order status successfully "+status+" ho gaya!");
- }catch(e){
-  if(button){button.disabled=false;button.textContent=status==="Delivered"?"✓ Mark as Delivered":"Mark as Pending";}
-  alert("Order update nahi hua: "+(e.code||"error")+" - "+e.message);
- }
+const button=document.querySelector(`#ordersList button[data-id="${CSS.escape(id)}"]`);
+if(button){button.disabled=true;button.textContent="Updating...";}
+try{
+if(!auth.currentUser||auth.currentUser.uid!==ADMIN_UID)throw new Error("Admin login verify nahi hua.");
+await updateDoc(doc(db,"orders",id),{status:status});
+const updated=await getDoc(doc(db,"orders",id));
+if(!updated.exists()||updated.data().status!==status)throw new Error("Firebase save confirm nahi hua.");
+await loadOrders();
+alert("Order successfully "+status+" ho gaya!");
+}catch(e){
+if(button){button.disabled=false;button.textContent="Dobara koshish karein";}
+alert("Order update nahi hua: "+e.message);
+}
 };
 </script>
 </body>
