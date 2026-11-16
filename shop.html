@@ -108,6 +108,10 @@ h3{font-size:18px;margin:17px 0 12px}
   <input id="customerName" placeholder="Aapka poora naam">
   <input id="mobile" type="tel" maxlength="10" placeholder="10 digit mobile number">
   <textarea id="address" rows="3" placeholder="Poora ghar ka address"></textarea>
+  <button type="button" class="green-btn" id="getLocationBtn">
+  📍 Use My Current Location
+</button>
+<p id="locationMessage"></p>
   <input id="landmark" placeholder="Landmark (optional)">
   <h3>Payment Method</h3>
   <div class="customer-info">💵 Cash on Delivery (COD)</div>
@@ -277,7 +281,45 @@ document.getElementById("checkoutBtn").onclick=()=>{
  document.getElementById("checkout").classList.remove("hidden");
  document.getElementById("checkout").scrollIntoView({behavior:"smooth"});
 };
+document.getElementById("getLocationBtn").onclick = () => {
+  const message = document.getElementById("locationMessage");
+  const btn = document.getElementById("getLocationBtn");
 
+  if (!navigator.geolocation) {
+    message.textContent = "Browser location support nahi karta.";
+    return;
+  }
+
+  btn.disabled = true;
+  message.textContent = "Location mil rahi hai...";
+
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+      const mapLink = `https://www.google.com/maps?q=${lat},${lon}`;
+
+      const addressBox = document.getElementById("address");
+      const oldAddress = addressBox.value
+        .split("\n")
+        .filter(line => !line.startsWith("Map location:"))
+        .join("\n")
+        .trim();
+
+      addressBox.value = oldAddress
+        ? oldAddress + "\nMap location: " + mapLink
+        : "Map location: " + mapLink;
+
+      message.textContent = "Location add ho gayi. Ghar/flat number bhi likhein.";
+      btn.disabled = false;
+    },
+    () => {
+      message.textContent = "Location nahi mili. Phone ki Location ON karke permission Allow karein.";
+      btn.disabled = false;
+    },
+    { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
+  );
+};
 document.getElementById("placeBtn").onclick=async()=>{
  const name=document.getElementById("customerName").value.trim();
  const mobile=document.getElementById("mobile").value.trim();
