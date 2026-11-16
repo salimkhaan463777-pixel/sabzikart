@@ -287,6 +287,10 @@ return `<div class="card">
 <b>Naam:</b> ${esc(o.customerName||"")}<br>
 <b>Mobile:</b> ${esc(o.mobile||"")}<br>
 <b>Address:</b> ${esc(o.address||"")}<br>
+${(()=>{
+const match=String(o.address||"").match(/https:\/\/www\.google\.com\/maps\?q=[^\s<]+/);
+return match?`<a href="${match[0]}" target="_blank" rel="noopener" style="display:inline-block;margin:8px 0;color:green;font-weight:bold">📍 Open Customer Location</a><br>`:"";
+})()}
 <b>Landmark:</b> ${esc(o.landmark||"Nahi diya")}
 </div>
 <h3>🧺 Ordered Vegetables</h3>
