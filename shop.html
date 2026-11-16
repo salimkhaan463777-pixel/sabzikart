@@ -3,445 +3,611 @@
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SabziKart</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#0b8f45">
+<title>SabziKart - Fresh Vegetables</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#f5f8f5;font-family:Arial,sans-serif;color:#202820}
-header{background:#12833b;color:white;padding:17px}
-.header{max-width:850px;margin:auto}
-.logo{font-size:25px;font-weight:bold}
-.tagline{font-size:12px;margin-top:4px}
-main{max-width:850px;margin:auto;padding:14px}
-.banner{background:#e8f7e9;border-radius:16px;padding:18px;margin:8px 0 16px}
-.banner h2{margin:0 0 6px;color:#167438}
-.banner p{margin:0;font-size:13px;color:#526b55}
-input,textarea{width:100%;padding:13px;border:1px solid #dce4dc;border-radius:10px;font-size:15px;margin:7px 0;background:white}
-h3{font-size:18px;margin:17px 0 12px}
-.products{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.product{background:white;border:1px solid #e8eee8;border-radius:15px;padding:10px;box-shadow:0 3px 12px #172b1710;min-width:0}
-.photo{width:100%;height:125px;object-fit:contain;background:white;border-radius:10px}
-.pname{font-weight:bold;font-size:14px;margin:8px 0 5px;min-height:34px}
-.price{font-size:17px;color:#12833b;font-weight:bold}
-.perkg{font-size:11px;color:#758075}
-.qty{display:flex;align-items:center;justify-content:center;gap:18px;margin:10px 0 2px}
-.qty button{width:36px;height:36px;border:0;border-radius:9px;background:#16833b;color:white;font-size:22px;font-weight:bold}
-.qty span{font-weight:bold}
-.cart,.checkout,.receipt{background:white;border:1px solid #e8eee8;border-radius:15px;padding:15px;margin-top:17px;box-shadow:0 3px 12px #172b1710}
-.cart-row,.bill-row{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid #edf0ed;font-size:14px}
-.total{font-size:18px;font-weight:bold;color:#12833b}
-.green-btn{width:100%;padding:14px;border:0;border-radius:10px;background:#16833b;color:white;font-size:16px;font-weight:bold;margin-top:12px}
-.green-btn:disabled{opacity:.5}
-.note{font-size:12px;color:#687568;line-height:1.5}
+:root{--green:#0b8f45;--dark:#176536;--light:#eaf8ef;--bg:#f6f8f6;--text:#202820;--muted:#718071;--border:#e7ece7}
+body{margin:0;background:var(--bg);font-family:Arial,sans-serif;color:var(--text);padding-bottom:88px}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+.topbar{background:#fff;padding:14px 16px 12px;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px #00000009}
+.brandrow{display:flex;align-items:center;justify-content:space-between}
+.brand{font-size:23px;font-weight:900;color:var(--green)}
+.brand span{color:#f2a900}
+.location-small{font-size:12px;color:var(--muted);margin-top:5px}
+.location-small b{color:#28352a}
+.top-icon{border:0;background:var(--light);color:var(--green);border-radius:12px;padding:10px;font-size:19px}
+.page{display:none;padding:15px;max-width:850px;margin:auto}
+.page.active{display:block}
+.hero{background:linear-gradient(120deg,#087b3a,#20ad5b);color:white;border-radius:19px;padding:20px;margin-bottom:17px;position:relative;overflow:hidden}
+.hero h2{font-size:23px;margin:0 0 8px;max-width:230px}
+.hero p{font-size:13px;margin:0;opacity:.94;max-width:230px;line-height:1.5}
+.hero .hero-icon{position:absolute;right:13px;bottom:3px;font-size:76px}
+.search{width:100%;border:1px solid var(--border);background:#fff;padding:14px 15px;border-radius:13px;outline:none;margin:0 0 15px}
+.search:focus,input:focus,textarea:focus{border-color:var(--green)}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin:18px 0 12px}
+.section-head h3{margin:0;font-size:18px}
+.small-muted{font-size:12px;color:var(--muted)}
+.category-row{display:flex;gap:9px;overflow-x:auto;padding-bottom:8px}
+.category-chip{white-space:nowrap;border:1px solid var(--border);background:#fff;padding:10px 14px;border-radius:25px;color:#344334;font-size:13px}
+.category-chip.selected{background:var(--green);color:#fff;border-color:var(--green)}
+.product-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.product{background:#fff;border:1px solid var(--border);border-radius:15px;padding:11px;min-width:0}
+.product-photo{height:112px;border-radius:11px;background:#f1f8f1;display:flex;align-items:center;justify-content:center;overflow:hidden;margin-bottom:9px}
+.product-photo img{width:100%;height:100%;object-fit:cover}
+.product-emoji{font-size:55px}
+.product-name{font-size:14px;font-weight:700;min-height:34px;line-height:1.3}
+.product-unit{font-size:11px;color:var(--muted);margin-top:3px}
+.product-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:10px;gap:5px}
+.price{font-weight:800;font-size:15px}
+.add-btn{background:var(--light);border:1px solid #b9e3c7;color:var(--green);font-weight:800;padding:8px 15px;border-radius:9px}
+.qty-control{display:flex;align-items:center;gap:10px;background:var(--green);color:white;border-radius:9px;padding:5px 8px;font-weight:bold}
+.qty-control button{border:0;background:transparent;color:white;font-size:18px;font-weight:bold;padding:0 3px}
+.empty{background:#fff;border-radius:15px;padding:28px 15px;text-align:center;color:var(--muted);line-height:1.6}
+.empty .big{font-size:45px;margin-bottom:8px}
+.card{background:#fff;border:1px solid var(--border);border-radius:15px;padding:15px;margin-bottom:13px}
+.card h3{margin:0 0 12px;font-size:17px}
+.cart-line{display:flex;justify-content:space-between;gap:10px;padding:12px 0;border-bottom:1px solid var(--border)}
+.cart-line:last-child{border-bottom:0}
+.cart-line-name{font-weight:700;font-size:14px}
+.cart-line-sub{font-size:12px;color:var(--muted);margin-top:4px}
+.bill-row{display:flex;justify-content:space-between;margin:11px 0;font-size:14px}
+.bill-total{border-top:1px dashed #cbd6cb;padding-top:13px;font-size:17px;font-weight:800}
+.primary{border:0;background:var(--green);color:#fff;padding:14px;border-radius:12px;font-weight:800;width:100%;font-size:15px}
+.primary:disabled{opacity:.5}
+.secondary{border:1px solid var(--green);background:#fff;color:var(--green);padding:11px;border-radius:11px;font-weight:700}
+.field{width:100%;padding:13px;border:1px solid var(--border);border-radius:11px;margin:6px 0 12px;background:#fff;outline:none}
+label{font-size:13px;font-weight:700;display:block}
+textarea.field{resize:vertical}
+.form-note{font-size:12px;color:var(--muted);line-height:1.5}
+.order-status{display:inline-block;padding:7px 11px;border-radius:20px;background:#fff3d9;color:#986100;font-size:12px;font-weight:800}
+.order-status.confirmed{background:#e8f1ff;color:#1758a5}
+.order-status.delivered{background:#e5f7e9;color:#16803c}
+.order-item{padding:12px 0;border-bottom:1px solid var(--border)}
+.order-item:last-child{border-bottom:0}
+.order-meta{font-size:12px;color:var(--muted);line-height:1.7}
+.order-title{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.account-avatar{height:65px;width:65px;border-radius:50%;background:var(--light);display:grid;place-items:center;font-size:30px;margin-bottom:12px}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--border);display:grid;grid-template-columns:repeat(5,1fr);padding:7px 3px calc(7px + env(safe-area-inset-bottom));z-index:30;box-shadow:0 -4px 15px #00000008}
+.nav-btn{border:0;background:transparent;color:#899389;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10px;padding:5px 0;position:relative}
+.nav-btn .nav-icon{font-size:21px;line-height:23px}
+.nav-btn.active{color:var(--green);font-weight:800}
+.cart-count{position:absolute;top:-1px;left:calc(50% + 5px);background:#ef4136;color:#fff;border-radius:20px;font-size:10px;min-width:16px;height:16px;display:grid;place-items:center;padding:0 4px}
+.toast{position:fixed;bottom:95px;left:50%;transform:translateX(-50%);background:#253329;color:#fff;padding:12px 18px;border-radius:10px;font-size:13px;z-index:60;display:none;max-width:90%;text-align:center}
 .hidden{display:none!important}
-.receipt-head{text-align:center;border-bottom:1px dashed #b8c8b9;padding-bottom:14px}
-.success{color:#138b42;font-size:23px;font-weight:bold}
-.receipt-item{display:flex;justify-content:space-between;gap:8px;padding:10px 0;border-bottom:1px solid #edf0ed;font-size:14px}
-.customer-info{background:#f3faf4;padding:13px;border-radius:10px;line-height:1.8;font-size:14px;overflow-wrap:anywhere;margin-top:12px}
-.final-total{font-size:20px;font-weight:bold;color:#12833b}
-@media(max-width:350px){.products{grid-template-columns:1fr}}
- /* SabziKart Premium Product Design */
-.product{
-  border:1px solid #edf1ed;
-  border-radius:16px;
-  padding:10px;
-  overflow:hidden;
-  transition:transform .2s;
-}
-.product img{
-  height:125px;
-  object-fit:cover;
-  background:#f1f7f1;
-}
-.pname{
-  font-size:15px;
-  min-height:36px;
-}
-.price{
-  font-size:16px;
-}
-.qty{
-  gap:8px;
-}
-.qty button{
-  min-width:42px;
-  min-height:40px;
-  font-size:20px;
-}
-.banner{
-  border:1px solid #d8efdc;
-}
+.success-box{background:#e8f8ed;border:1px solid #bce7c9;border-radius:14px;padding:16px;margin-bottom:14px}
+.success-box h3{color:var(--dark);margin:0 0 8px}
+@media(min-width:650px){.product-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.page{padding:20px}.product-photo{height:145px}}
 </style>
 </head>
 <body>
-<header>
- <div class="header">
-  <div class="logo">🥬 SabziKart</div>
-  <div class="tagline">Taazi Sabzi, Seedha Aapke Ghar</div>
- </div>
+
+<header class="topbar">
+  <div class="brandrow">
+    <div>
+      <div class="brand">Sabzi<span>Kart</span></div>
+      <div class="location-small">📍 Delivery location: <b id="headerLocation">Add your address</b></div>
+    </div>
+    <button class="top-icon" id="goAccount" aria-label="Account">👤</button>
+  </div>
 </header>
 
 <main>
-<section id="shopArea">
- <div class="banner">
-  <h2>Fresh Vegetables 🥦</h2>
-  <p>Taazi sabzi ghar baithe order karein.</p>
- </div>
+  <!-- HOME -->
+  <section class="page active" id="homePage">
+    <div class="hero">
+      <h2>Taaza Sabzi, Seedha Aapke Ghar! 🥬</h2>
+      <p>Fresh vegetables aur daily essentials ab aasani se order karein.</p>
+      <div class="hero-icon">🛒</div>
+    </div>
+    <input class="search" id="homeSearch" placeholder="🔍 Sabzi search karein...">
+    <div class="section-head"><h3>Categories</h3><span class="small-muted" id="homeCategoryCount"></span></div>
+    <div class="category-row" id="homeCategories"></div>
+    <div class="section-head"><h3 id="homeProductsTitle">Aaj ki taazi sabzi</h3><span class="small-muted" id="productCount"></span></div>
+    <div class="product-grid" id="homeProducts"><div class="empty">Sabzi load ho rahi hai...</div></div>
+  </section>
 
- <input id="search" placeholder="🔍 Sabzi search karein...">
+  <!-- CATEGORIES -->
+  <section class="page" id="categoriesPage">
+    <div class="section-head"><h3>Sabhi Categories</h3></div>
+    <div class="category-row" id="allCategories"></div>
+    <div class="section-head"><h3 id="categoryProductsTitle">Sabhi Sabzi</h3></div>
+    <div class="product-grid" id="categoryProducts"></div>
+  </section>
 
- <h3>Sabhi Sabziyan</h3>
- <div id="products" class="products">Sabzi load ho rahi hain...</div>
+  <!-- CART -->
+  <section class="page" id="cartPage">
+    <div class="section-head"><h3>🛒 Aapka Cart</h3><span class="small-muted" id="cartItemsCount">0 items</span></div>
+    <div id="cartContent"></div>
+    <div id="checkoutArea" class="hidden">
+      <div class="card">
+        <h3>📦 Delivery Details</h3>
+        <label for="customerName">Poora naam</label>
+        <input class="field" id="customerName" placeholder="Aapka poora naam">
+        <label for="mobile">Mobile number</label>
+        <input class="field" id="mobile" type="tel" inputmode="numeric" maxlength="10" placeholder="10 digit mobile number">
+        <label for="address">Ghar ka poora address</label>
+        <textarea class="field" id="address" rows="3" placeholder="House number, society, area, street..."></textarea>
+        <label for="landmark">Landmark (pehchan ki jagah)</label>
+        <input class="field" id="landmark" placeholder="Nearby masjid, school, tower...">
+        <button class="secondary" id="getLocation" type="button">📍 Meri current location select karein</button>
+        <p class="form-note" id="locationMessage">Location button dabane par browser location permission maangega. GPS link address ke saath Admin panel mein bhi dikhega.</p>
+      </div>
+      <div class="card">
+        <h3>💵 Payment Method</h3>
+        <div>Cash on Delivery (COD)</div>
+        <p class="form-note">Filhaal payment delivery ke waqt cash mein hoga.</p>
+      </div>
+      <button class="primary" id="placeOrder">Order Place Karein</button>
+    </div>
+  </section>
 
- <section class="cart">
-  <h3>🛒 Aapka Cart</h3>
-  <div id="cartItems">Abhi cart khaali hai.</div>
-  <div class="bill-row"><span>Sabzi ka total</span><b id="subtotal">₹0</b></div>
-  <div class="bill-row"><span>Delivery charge</span><b id="delivery">₹0</b></div>
-  <div class="bill-row total"><span>Grand Total</span><span id="grandTotal">₹0</span></div>
-  <p class="note">₹100 tak order par ₹20 delivery. ₹100 se upar delivery FREE.</p>
-  <button class="green-btn" id="checkoutBtn" disabled>Checkout Karein</button>
- </section>
+  <!-- MY ORDERS -->
+  <section class="page" id="ordersPage">
+    <div class="section-head"><h3>📦 My Orders</h3></div>
+    <div class="card">
+      <h3>Apna Order Track Karein</h3>
+      <label for="trackMobile">Order karte waqt diya hua mobile number</label>
+      <input class="field" id="trackMobile" type="tel" inputmode="numeric" maxlength="10" placeholder="10 digit mobile number">
+      <button class="primary" id="trackButton">Mere Orders Dekhein</button>
+      <p class="form-note">Aapke number se kiye gaye orders aur unka latest status yahan dikhega.</p>
+    </div>
+    <div id="ordersList"><div class="empty"><div class="big">📦</div>Abhi order dekhne ke liye apna mobile number enter karein.</div></div>
+  </section>
 
- <section class="checkout hidden" id="checkout">
-  <h3>📦 Delivery Details</h3>
-  <input id="customerName" placeholder="Aapka poora naam">
-  <input id="mobile" type="tel" maxlength="10" placeholder="10 digit mobile number">
-  <textarea id="address" rows="3" placeholder="Poora ghar ka address"></textarea>
-  <button type="button" class="green-btn" id="getLocationBtn">
-  📍 Use My Current Location
-</button>
-<p id="locationMessage"></p>
-  <input id="landmark" placeholder="Landmark (optional)">
-  <h3>Payment Method</h3>
-  <div class="customer-info">💵 Cash on Delivery (COD)</div>
-  <button class="green-btn" id="placeBtn">Place Order</button>
- </section>
-</section>
-
-<section id="receiptArea" class="hidden">
- <div class="receipt" id="receiptContent"></div>
- <button class="green-btn" id="newShopping">Nayi Shopping Karein</button>
-</section>
+  <!-- ACCOUNT -->
+  <section class="page" id="accountPage">
+    <div class="card">
+      <div class="account-avatar">👤</div>
+      <h3>My Account</h3>
+      <p class="form-note">Apni details save karein. Agli baar checkout mein details apne aap aa jayengi.</p>
+      <label for="accountName">Aapka naam</label>
+      <input class="field" id="accountName" placeholder="Poora naam">
+      <label for="accountMobile">Mobile number</label>
+      <input class="field" id="accountMobile" type="tel" inputmode="numeric" maxlength="10" placeholder="10 digit mobile number">
+      <label for="accountAddress">Ghar ka address</label>
+      <textarea class="field" id="accountAddress" rows="3" placeholder="Poora address"></textarea>
+      <label for="accountLandmark">Landmark</label>
+      <input class="field" id="accountLandmark" placeholder="Nearby landmark">
+      <button class="primary" id="saveAccount">Details Save Karein</button>
+    </div>
+    <div class="card">
+      <h3>SabziKart</h3>
+      <p class="form-note">Fresh vegetables delivered to your doorstep.</p>
+      <button class="secondary" id="accountOrders">Mere Orders Dekhein</button>
+    </div>
+  </section>
 </main>
+
+<nav class="bottom-nav">
+  <button class="nav-btn active" data-tab="home"><span class="nav-icon">🏠</span><span>Home</span></button>
+  <button class="nav-btn" data-tab="categories"><span class="nav-icon">🗂️</span><span>Categories</span></button>
+  <button class="nav-btn" data-tab="cart"><span class="nav-icon">🛒</span><span>Cart</span><span class="cart-count hidden" id="navCartCount">0</span></button>
+  <button class="nav-btn" data-tab="orders"><span class="nav-icon">📦</span><span>My Orders</span></button>
+  <button class="nav-btn" data-tab="account"><span class="nav-icon">👤</span><span>Account</span></button>
+</nav>
+<div class="toast" id="toast"></div>
 
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/13.3.0/firebase-app.js";
-import {getFirestore,collection,getDocs,addDoc} from "https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
+import {
+  getFirestore, collection, getDocs, addDoc, query, where, onSnapshot
+} from "https://www.gstatic.com/firebasejs/13.3.0/firebase-firestore.js";
 
-const firebaseConfig={
- apiKey:"AIzaSyCX2bu-_yJHLf7LwuXQmsKq2nOJ4xOARw",
- authDomain:"sabzikart-46468.firebaseapp.com",
- projectId:"sabzikart-46468",
- storageBucket:"sabzikart-46468.firebasestorage.app",
- messagingSenderId:"881977965995",
- appId:"1:881977965995:web:2846b9e527feea48dee6ee",
- measurementId:"G-FBL2F0P1H8"
+const firebaseConfig = {
+  apiKey: "AIzaSyCX2bu-_yJHLf7LwuXQmsKq2nOJ4xOARw",
+  authDomain: "sabzikart-46468.firebaseapp.com",
+  projectId: "sabzikart-46468",
+  storageBucket: "sabzikart-46468.firebasestorage.app",
+  messagingSenderId: "881977965995",
+  appId: "1:881977965995:web:2846b9e527feea48dee6ee",
+  measurementId: "G-FBL2F0P1H8"
 };
 
-const app=initializeApp(firebaseConfig);
-const db=getFirestore(app);
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-const photos={
- potato:"https://sunagriindustries.com/wp-content/uploads/2026/01/Potato-300X300.jpeg",
- tomato:"https://sunagriindustries.com/wp-content/uploads/2026/01/Tomato-300X300-2.jpg",
- onion:"https://sunagriindustries.com/wp-content/uploads/2026/01/Onion-300X300.jpg",
- cauliflower:"https://sunagriindustries.com/wp-content/uploads/2026/01/Cauliflower-300X300.jpg",
- cabbage:"https://sunagriindustries.com/wp-content/uploads/2026/01/Cabbage-300X300.jpg",
- brinjal:"https://sunagriindustries.com/wp-content/uploads/2026/01/Brinjal-300X300.jpg",
- bhindi:"https://sunagriindustries.com/wp-content/uploads/2026/01/Okra-300X300.jpg",
- peas:"https://sunagriindustries.com/wp-content/uploads/2026/01/Peas-300X300.jpg",
- beans:"https://sunagriindustries.com/wp-content/uploads/2026/01/Beans-300X300.jpg",
- spinach:"https://sunagriindustries.com/wp-content/uploads/2026/01/Spinach-300X300.jpeg",
- carrot:"https://sunagriindustries.com/wp-content/uploads/2026/01/Carrot-300X300.jpg",
- radish:"https://sunagriindustries.com/wp-content/uploads/2026/01/Radish-300x300-1.jpg",
- beetroot:"https://sunagriindustries.com/wp-content/uploads/2026/01/Beetroot-300X300.jpeg",
- pumpkin:"https://sunagriindustries.com/wp-content/uploads/2026/01/Pumpkin-300X300.jpg",
- karela:"https://sunagriindustries.com/wp-content/uploads/2026/01/Bitter-Gourd-300X300.jpg",
- lauki:"https://sunagriindustries.com/wp-content/uploads/2026/01/Bottle-Gourd-300X300.jpg",
- drumstick:"https://sunagriindustries.com/wp-content/uploads/2026/01/Drumstick-300X300-2.jpg",
- cucumber:"https://sunagriindustries.com/wp-content/uploads/2026/01/Cucumber-300X300.jpg",
- chilli:"https://sunagriindustries.com/wp-content/uploads/2026/01/Green-Chillies-300X300.jpg",
- garlic:"https://sunagriindustries.com/wp-content/uploads/2026/01/Garlic-300X300-1.jpg",
- turai:"https://sunagriindustries.com/wp-content/uploads/2026/01/Ridge-Gourd-300X300.jpg"
-};
+let vegetables = [];
+let cart = {};
+let selectedCategory = "All";
+let unsubscribeOrders = null;
+let currentTrackingMobile = "";
 
-const aliases=[
- ["potato",["potato","aloo","आलू","બટાકા"]],
- ["tomato",["tomato","tamatar","टमाटर","ટામેટા"]],
- ["onion",["onion","pyaz","pyaaz","प्याज","ડુંગળી"]],
- ["cauliflower",["cauliflower","phool gobhi","फूलगोभी","ફૂલકોબી"]],
- ["cabbage",["cabbage","patta gobhi","पत्तागोभी","કોબી"]],
- ["brinjal",["brinjal","baingan","बैंगन","રીંગણ"]],
- ["bhindi",["bhindi","okra","lady finger","भिंडी","ભીંડા"]],
- ["peas",["peas","matar","मटर","વટાણા"]],
- ["beans",["beans","sem","सेम","ફણસી"]],
- ["spinach",["spinach","palak","पालक","પાલક"]],
- ["carrot",["carrot","gajar","गाजर","ગાજર"]],
- ["radish",["radish","mooli","मूली","મૂળા"]],
- ["beetroot",["beetroot","chukandar","चुकंदर","બીટ"]],
- ["pumpkin",["pumpkin","kaddu","कद्दू","કોળું"]],
- ["karela",["karela","bitter gourd","करेला","કારેલા"]],
- ["lauki",["lauki","bottle gourd","दूધી","लौकी","દૂધી"]],
- ["drumstick",["drumstick","sahjan","सहजन","સરગવો"]],
- ["cucumber",["cucumber","kheera","खीरा","કાકડી"]],
- ["chilli",["chilli","mirchi","मिर्च","મરચાં"]],
- ["garlic",["garlic","lahsun","लहसुन","લસણ"]],
- ["turai",["turai","ridge gourd","तुरई","તુરીયા"]]
-];
+const $ = id => document.getElementById(id);
+const money = n => "₹" + Number(n || 0).toFixed(0);
+const safe = value => String(value ?? "").replace(/[&<>"']/g, ch => ({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+}[ch]));
 
-let vegetables=[];
-let cart={};
-
-function esc(value){
- return String(value??"").replace(/[&<>"']/g,c=>({
- "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
- }[c]));
+function toast(message){
+  const el = $("toast");
+  el.textContent = message;
+  el.style.display = "block";
+  clearTimeout(toast.timer);
+  toast.timer = setTimeout(()=>el.style.display="none",2600);
 }
 
-function getPhoto(v){
- if(typeof v.image==="string" && v.image.trim())return v.image.trim();
- const s=(v.id+" "+v.name).toLowerCase();
- for(const [key,words] of aliases){
-  if(words.some(word=>s.includes(word)))return photos[key];
- }
- return "";
+function readAccount(){
+  try{return JSON.parse(localStorage.getItem("sabzikartCustomer") || "{}");}
+  catch{return {};}
+}
+function saveLocalAccount(data){
+  localStorage.setItem("sabzikartCustomer",JSON.stringify(data));
+}
+function loadAccountFields(){
+  const a = readAccount();
+  $("accountName").value = a.name || "";
+  $("accountMobile").value = a.mobile || "";
+  $("accountAddress").value = a.address || "";
+  $("accountLandmark").value = a.landmark || "";
+  $("customerName").value = a.name || "";
+  $("mobile").value = a.mobile || "";
+  $("address").value = a.address || "";
+  $("landmark").value = a.landmark || "";
+  $("trackMobile").value = a.mobile || "";
+  updateHeaderLocation();
+}
+function updateHeaderLocation(){
+  const a = readAccount();
+  $("headerLocation").textContent = a.address ? a.address.slice(0,35) : "Add your address";
 }
 
-function money(n){
- return "₹"+Number(n).toFixed(2).replace(/\.00$/,"");
+function showPage(tab){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.querySelectorAll(".nav-btn").forEach(b=>b.classList.toggle("active",b.dataset.tab===tab));
+  const page = $(tab+"Page");
+  if(page) page.classList.add("active");
+  if(tab==="cart") renderCart();
+  if(tab==="account") loadAccountFields();
+  window.scrollTo({top:0,behavior:"instant"});
 }
+document.querySelectorAll(".nav-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>showPage(btn.dataset.tab));
+});
+$("goAccount").addEventListener("click",()=>showPage("account"));
+$("accountOrders").addEventListener("click",()=>showPage("orders"));
 
-function getRows(){
- return vegetables.filter(v=>cart[v.id]>0).map(v=>({
-  vegetableId:v.id,
-  name:v.name,
-  price:v.price,
-  quantity:cart[v.id],
-  lineTotal:v.price*cart[v.id]
- }));
+function getName(v){
+  return String(v.name ?? v.vegetableName ?? v.title ?? v.productName ?? "Sabzi");
 }
-
-function totals(){
- const rows=getRows();
- const subtotal=rows.reduce((sum,v)=>sum+v.lineTotal,0);
- const deliveryCharge=rows.length?(subtotal<=100?20:0):0;
- return {rows,subtotal,deliveryCharge,total:subtotal+deliveryCharge};
+function getPrice(v){
+  return Number(v.price ?? v.sellingPrice ?? v.rate ?? 0);
 }
-
-function renderProducts(){
- const q=document.getElementById("search").value.toLowerCase();
- const list=vegetables.filter(v=>v.available && v.name.toLowerCase().includes(q));
- const box=document.getElementById("products");
-
- if(!list.length){
-  box.textContent="Abhi koi sabzi available nahi hai.";
-  return;
- }
-
- box.innerHTML=list.map(v=>{
-  const photo=getPhoto(v);
-  return `<div class="product">
-   ${photo?`<img class="photo" src="${esc(photo)}" alt="${esc(v.name)}" onerror="this.style.display='none'">`:
-   `<div class="photo" style="display:flex;align-items:center;justify-content:center;color:#888;font-size:12px">Photo available nahi</div>`}
-   <div class="pname">${esc(v.name)}</div>
-   <div class="price">${money(v.price)} <span class="perkg">/ kg</span></div>
-   <div class="qty">
-    <button onclick="changeQty('${esc(v.id)}',-1)">−</button>
-    <span>${cart[v.id]||0}</span>
-    <button onclick="changeQty('${esc(v.id)}',1)">+</button>
-   </div>
-  </div>`;
- }).join("");
+function getUnit(v){
+  return String(v.unit ?? v.quantityUnit ?? v.weight ?? "kg");
 }
-
-window.changeQty=function(id,change){
- const next=(cart[id]||0)+change;
- if(next<=0)delete cart[id];
- else cart[id]=Math.min(next,99);
- renderProducts();
- renderCart();
-};
-
-function renderCart(){
- const t=totals();
- document.getElementById("cartItems").innerHTML=t.rows.length?
- t.rows.map(v=>`<div class="cart-row"><span>${esc(v.name)} × ${v.quantity} kg</span><b>${money(v.lineTotal)}</b></div>`).join("")
- :"Abhi cart khaali hai.";
- document.getElementById("subtotal").textContent=money(t.subtotal);
- document.getElementById("delivery").textContent=t.rows.length&&t.deliveryCharge===0?"FREE":money(t.deliveryCharge);
- document.getElementById("grandTotal").textContent=money(t.total);
- document.getElementById("checkoutBtn").disabled=!t.rows.length;
+function getCategory(v){
+  return String(v.category ?? v.type ?? "Other").trim() || "Other";
 }
-
-document.getElementById("search").addEventListener("input",renderProducts);
-
-document.getElementById("checkoutBtn").onclick=()=>{
- if(!getRows().length)return;
- document.getElementById("checkout").classList.remove("hidden");
- document.getElementById("checkout").scrollIntoView({behavior:"smooth"});
-};
-document.getElementById("getLocationBtn").onclick = () => {
-  const message = document.getElementById("locationMessage");
-  const btn = document.getElementById("getLocationBtn");
-
-  if (!navigator.geolocation) {
-    message.textContent = "Browser location support nahi karta.";
-    return;
-  }
-
-  btn.disabled = true;
-  message.textContent = "Location mil rahi hai...";
-
-  navigator.geolocation.getCurrentPosition(
-    (position) => {
-      const lat = position.coords.latitude;
-      const lon = position.coords.longitude;
-      const mapLink = `https://www.google.com/maps?q=${lat},${lon}`;
-
-      const addressBox = document.getElementById("address");
-      const oldAddress = addressBox.value
-        .split("\n")
-        .filter(line => !line.startsWith("Map location:"))
-        .join("\n")
-        .trim();
-
-      addressBox.value = oldAddress
-        ? oldAddress + "\nMap location: " + mapLink
-        : "Map location: " + mapLink;
-
-      message.textContent = "Location add ho gayi. Ghar/flat number bhi likhein.";
-      btn.disabled = false;
-    },
-    () => {
-      message.textContent = "Location nahi mili. Phone ki Location ON karke permission Allow karein.";
-      btn.disabled = false;
-    },
-    { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
-  );
-};
-document.getElementById("placeBtn").onclick=async()=>{
- const name=document.getElementById("customerName").value.trim();
- const mobile=document.getElementById("mobile").value.trim();
- const address=document.getElementById("address").value.trim();
- const landmark=document.getElementById("landmark").value.trim();
- const t=totals();
-
- if(name.length<2){alert("Apna poora naam likhein.");return;}
- if(!/^[0-9]{10}$/.test(mobile)){alert("10 digit mobile number likhein.");return;}
- if(address.length<8){alert("Poora address likhein.");return;}
- if(!t.rows.length){alert("Cart mein sabzi add karein.");return;}
-
- const btn=document.getElementById("placeBtn");
- btn.disabled=true;
- btn.textContent="Order save ho raha hai...";
-
- try{
-  const orderData={
-   customerName:name,
-   mobile:mobile,
-   address:address,
-   landmark:landmark,
-   items:t.rows.map(v=>({
-    vegetableId:v.vegetableId,
-    name:v.name,
-    price:v.price,
-    quantity:v.quantity,
-    lineTotal:v.lineTotal
-   })),
-   subtotal:t.subtotal,
-   deliveryCharge:t.deliveryCharge,
-   total:t.total,
-   paymentMethod:"COD",
-   status:"Pending",
-   createdAt:new Date().toISOString()
-  };
-
-  const saved=await addDoc(collection(db,"orders"),orderData);
-  showReceipt({...orderData,orderId:saved.id});
- }catch(error){
-  console.error(error);
-  alert("Order save nahi hua: "+error.message);
-  btn.disabled=false;
-  btn.textContent="Place Order";
- }
-};
-
-function showReceipt(order){
- document.getElementById("shopArea").classList.add("hidden");
- document.getElementById("receiptArea").classList.remove("hidden");
-
- const itemHTML=order.items.map(v=>`
-  <div class="receipt-item">
-   <span>${esc(v.name)}<br><small>${v.quantity} kg × ${money(v.price)}</small></span>
-   <b>${money(v.lineTotal)}</b>
-  </div>`).join("");
-
- document.getElementById("receiptContent").innerHTML=`
-  <div class="receipt-head">
-   <div class="success">✓ Order Confirmed!</div>
-   <p>Aapka order successfully save ho gaya.</p>
-   <b>🥬 SabziKart</b><br>
-   <small>Order ID: ${esc(order.orderId)}</small>
-  </div>
-  <h3>🧺 Aapki Sabziyan</h3>
-  ${itemHTML}
-  <h3>Bill Details</h3>
-  <div class="bill-row"><span>Sabzi ka total</span><b>${money(order.subtotal)}</b></div>
-  <div class="bill-row"><span>Delivery charge</span><b>${order.deliveryCharge===0?"FREE":money(order.deliveryCharge)}</b></div>
-  <div class="bill-row final-total"><span>Grand Total</span><span>${money(order.total)}</span></div>
-  <h3>📍 Delivery Details</h3>
-  <div class="customer-info">
-   <b>Naam:</b> ${esc(order.customerName)}<br>
-   <b>Mobile:</b> ${esc(order.mobile)}<br>
-   <b>Address:</b> ${esc(order.address)}<br>
-   <b>Landmark:</b> ${esc(order.landmark||"Nahi diya")}
-  </div>
-  <div class="customer-info">
-   <b>💵 Payment:</b> Cash on Delivery (COD)<br>
-   <b>Order Status:</b> Pending
-  </div>
-  <p class="note" style="text-align:center">SabziKart se shopping karne ke liye dhanyavaad! ❤️</p>
- `;
- window.scrollTo({top:0,behavior:"smooth"});
+function getImage(v){
+  return v.imageUrl || v.image || v.photo || v.imageURL || "";
 }
-
-document.getElementById("newShopping").onclick=()=>{
- cart={};
- document.getElementById("receiptArea").classList.add("hidden");
- document.getElementById("shopArea").classList.remove("hidden");
- document.getElementById("checkout").classList.add("hidden");
- document.getElementById("customerName").value="";
- document.getElementById("mobile").value="";
- document.getElementById("address").value="";
- document.getElementById("landmark").value="";
- renderProducts();
- renderCart();
- window.scrollTo({top:0,behavior:"smooth"});
-};
+function isAvailable(v){
+  return v.available !== false && v.isAvailable !== false && v.status !== "Unavailable" && v.status !== "Out of Stock";
+}
+function emojiFor(name){
+  const n=name.toLowerCase();
+  if(n.includes("potato")||n.includes("aloo"))return "🥔";
+  if(n.includes("tomato")||n.includes("tamatar"))return "🍅";
+  if(n.includes("onion")||n.includes("pyaz"))return "🧅";
+  if(n.includes("carrot")||n.includes("gajar"))return "🥕";
+  if(n.includes("chilli")||n.includes("mirch"))return "🌶️";
+  if(n.includes("cabbage")||n.includes("patta gobi"))return "🥬";
+  if(n.includes("cauliflower")||n.includes("gobi"))return "🥦";
+  if(n.includes("lemon")||n.includes("nimbu"))return "🍋";
+  if(n.includes("cucumber")||n.includes("kheera"))return "🥒";
+  if(n.includes("brinjal")||n.includes("baingan"))return "🍆";
+  if(n.includes("peas")||n.includes("matar"))return "🫛";
+  if(n.includes("garlic")||n.includes("lahsun"))return "🧄";
+  if(n.includes("ginger")||n.includes("adrak"))return "🫚";
+  if(n.includes("spinach")||n.includes("palak"))return "🥬";
+  return "🥗";
+}
 
 async function loadVegetables(){
- try{
-  const snap=await getDocs(collection(db,"vegetables"));
-  vegetables=snap.docs.map(d=>{
-   const data=d.data();
-   return {
-    id:d.id,
-    name:String(data.name||d.id),
-    price:Number(data.price),
-    available:data.available===true,
-    image:typeof data.image==="string"?data.image:""
-   };
-  }).filter(v=>Number.isFinite(v.price)&&v.price>=0);
-
-  renderProducts();
-  renderCart();
- }catch(error){
-  console.error(error);
-  document.getElementById("products").textContent="Sabzi load nahi hui: "+error.message;
- }
+  $("homeProducts").innerHTML='<div class="empty">Sabzi load ho rahi hai...</div>';
+  try{
+    const snap = await getDocs(collection(db,"vegetables"));
+    vegetables = snap.docs.map(d=>({id:d.id,...d.data()})).filter(v=>getPrice(v)>=0 && isAvailable(v));
+    renderAllProducts();
+  }catch(error){
+    console.error(error);
+    $("homeProducts").innerHTML='<div class="empty">Sabzi load nahi ho pa rahi. Internet check karke page refresh karein.</div>';
+    $("categoryProducts").innerHTML='<div class="empty">Products load nahi hue.</div>';
+    toast("Sabzi load karne mein problem aayi.");
+  }
 }
 
+function getCategories(){
+  return ["All",...new Set(vegetables.map(getCategory))];
+}
+function categoryButtons(targetId){
+  const target=$(targetId);
+  target.innerHTML="";
+  getCategories().forEach(cat=>{
+    const b=document.createElement("button");
+    b.className="category-chip"+(selectedCategory===cat?" selected":"");
+    b.textContent=cat==="All"?"Sabhi":cat;
+    b.addEventListener("click",()=>{
+      selectedCategory=cat;
+      renderAllProducts();
+    });
+    target.appendChild(b);
+  });
+}
+
+function productCard(v){
+  const qty=Number(cart[v.id]?.quantity || 0);
+  const image=getImage(v);
+  const photo=image
+    ? `<img src="${safe(image)}" alt="${safe(getName(v))}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="product-emoji" style="display:none">${emojiFor(getName(v))}</span>`
+    : `<span class="product-emoji">${emojiFor(getName(v))}</span>`;
+  return `<article class="product">
+    <div class="product-photo">${photo}</div>
+    <div class="product-name">${safe(getName(v))}</div>
+    <div class="product-unit">Per ${safe(getUnit(v))}</div>
+    <div class="product-bottom">
+      <span class="price">${money(getPrice(v))}</span>
+      ${qty>0
+        ? `<div class="qty-control"><button data-minus="${safe(v.id)}">−</button><span>${qty}</span><button data-plus="${safe(v.id)}">+</button></div>`
+        : `<button class="add-btn" data-add="${safe(v.id)}">ADD +</button>`}
+    </div>
+  </article>`;
+}
+
+function renderGrid(targetId,list){
+  const target=$(targetId);
+  if(!list.length){
+    target.innerHTML='<div class="empty" style="grid-column:1/-1"><div class="big">🥬</div>Is category mein abhi sabzi available nahi hai.</div>';
+    return;
+  }
+  target.innerHTML=list.map(productCard).join("");
+}
+function renderAllProducts(){
+  categoryButtons("homeCategories");
+  categoryButtons("allCategories");
+  const search=($("homeSearch").value || "").toLowerCase().trim();
+  let list=vegetables.filter(v=>{
+    const matchesCategory=selectedCategory==="All" || getCategory(v)===selectedCategory;
+    const matchesSearch=getName(v).toLowerCase().includes(search);
+    return matchesCategory && matchesSearch;
+  });
+  $("homeProductsTitle").textContent=selectedCategory==="All"?"Aaj ki taazi sabzi":selectedCategory;
+  $("productCount").textContent=list.length+" items";
+  $("homeCategoryCount").textContent=vegetables.length+" products";
+  $("categoryProductsTitle").textContent=selectedCategory==="All"?"Sabhi Sabzi":selectedCategory;
+  renderGrid("homeProducts",list);
+  renderGrid("categoryProducts",list);
+}
+$("homeSearch").addEventListener("input",renderAllProducts);
+
+function updateCartCount(){
+  const count=Object.values(cart).reduce((s,x)=>s+Number(x.quantity||0),0);
+  $("navCartCount").textContent=count;
+  $("navCartCount").classList.toggle("hidden",count===0);
+  $("cartItemsCount").textContent=count+" items";
+}
+function addQuantity(id,delta){
+  const v=vegetables.find(x=>x.id===id);
+  if(!v)return;
+  const current=Number(cart[id]?.quantity||0);
+  const next=current+delta;
+  if(next<=0)delete cart[id];
+  else cart[id]={vegetableId:id,name:getName(v),price:getPrice(v),quantity:next,unit:getUnit(v)};
+  renderAllProducts();
+  renderCart();
+  updateCartCount();
+}
+document.addEventListener("click",e=>{
+  const add=e.target.closest("[data-add]");
+  const plus=e.target.closest("[data-plus]");
+  const minus=e.target.closest("[data-minus]");
+  if(add)addQuantity(add.dataset.add,1);
+  if(plus)addQuantity(plus.dataset.plus,1);
+  if(minus)addQuantity(minus.dataset.minus,-1);
+});
+
+function cartSubtotal(){
+  return Object.values(cart).reduce((s,x)=>s+x.price*x.quantity,0);
+}
+function renderCart(){
+  updateCartCount();
+  const items=Object.values(cart);
+  if(!items.length){
+    $("cartContent").innerHTML='<div class="empty"><div class="big">🛒</div><b>Aapka cart khaali hai</b><br>Home se apni pasand ki sabzi add karein.<br><br><button class="secondary" id="shopNow">Sabzi Dekhein</button></div>';
+    $("checkoutArea").classList.add("hidden");
+    $("shopNow")?.addEventListener("click",()=>showPage("home"));
+    return;
+  }
+  const subtotal=cartSubtotal();
+  const delivery=subtotal<=100?20:0;
+  $("cartContent").innerHTML=`
+    <div class="card">
+      ${items.map(x=>`<div class="cart-line">
+        <div><div class="cart-line-name">${safe(x.name)}</div><div class="cart-line-sub">${money(x.price)} / ${safe(x.unit)} · ${money(x.price*x.quantity)}</div></div>
+        <div class="qty-control"><button data-minus="${safe(x.vegetableId)}">−</button><span>${x.quantity}</span><button data-plus="${safe(x.vegetableId)}">+</button></div>
+      </div>`).join("")}
+    </div>
+    <div class="card">
+      <h3>Bill Details</h3>
+      <div class="bill-row"><span>Subtotal</span><b>${money(subtotal)}</b></div>
+      <div class="bill-row"><span>Delivery Charge</span><b>${delivery===0?"FREE":money(delivery)}</b></div>
+      <div class="bill-row bill-total"><span>Total Amount</span><span>${money(subtotal+delivery)}</span></div>
+      <p class="form-note">${delivery===0?"Aapki delivery free hai!":"₹100 se zyada shopping par delivery free."}</p>
+    </div>
+    <button class="primary" id="checkoutButton">Proceed to Checkout</button>`;
+  $("checkoutArea").classList.add("hidden");
+  $("checkoutButton").addEventListener("click",()=>{
+    $("checkoutArea").classList.remove("hidden");
+    loadAccountFields();
+    $("checkoutArea").scrollIntoView({behavior:"smooth",block:"start"});
+  });
+}
+
+$("getLocation").addEventListener("click",()=>{
+  const msg=$("locationMessage");
+  if(!navigator.geolocation){
+    msg.textContent="Aapke browser mein GPS location available nahi hai.";
+    return;
+  }
+  msg.textContent="Location mil rahi hai. Kripya permission allow karein...";
+  navigator.geolocation.getCurrentPosition(position=>{
+    const lat=position.coords.latitude;
+    const lon=position.coords.longitude;
+    const mapUrl=`https://www.google.com/maps?q=${lat},${lon}`;
+    const current=$("address").value.trim();
+    const cleaned=current.replace(/\n?Map location: https:\/\/www\.google\.com\/maps\?q=[^\s]+/g,"").trim();
+    $("address").value=(cleaned?cleaned+"\n":"")+`Map location: ${mapUrl}`;
+    msg.textContent="✅ Location select ho gayi. Address ke saath map link bhi save hoga.";
+    const a=readAccount();
+    a.address=$("address").value;
+    saveLocalAccount(a);
+    updateHeaderLocation();
+  },error=>{
+    msg.textContent=error.code===1?"Location permission allow karein, phir dobara try karein.":"Location nahi mil paayi. GPS on karke dobara try karein.";
+  },{enableHighAccuracy:true,timeout:15000,maximumAge:0});
+});
+
+$("saveAccount").addEventListener("click",()=>{
+  const name=$("accountName").value.trim();
+  const mobile=$("accountMobile").value.trim();
+  if(name.length<2){toast("Sahi naam enter karein.");return;}
+  if(!/^\d{10}$/.test(mobile)){toast("10 digit mobile number enter karein.");return;}
+  saveLocalAccount({
+    name,mobile,
+    address:$("accountAddress").value.trim(),
+    landmark:$("accountLandmark").value.trim()
+  });
+  loadAccountFields();
+  toast("Aapki details save ho gayi.");
+});
+
+$("placeOrder").addEventListener("click",async()=>{
+  const name=$("customerName").value.trim();
+  const mobile=$("mobile").value.trim();
+  const address=$("address").value.trim();
+  const landmark=$("landmark").value.trim();
+  const items=Object.values(cart);
+  if(!items.length){toast("Cart khaali hai.");return;}
+  if(name.length<2){toast("Apna poora naam enter karein.");return;}
+  if(!/^\d{10}$/.test(mobile)){toast("Sahi 10 digit mobile number enter karein.");return;}
+  if(address.length<8){toast("Poora delivery address enter karein.");return;}
+
+  const subtotal=cartSubtotal();
+  const deliveryCharge=subtotal<=100?20:0;
+  const total=subtotal+deliveryCharge;
+  const orderItems=items.map(x=>({
+    vegetableId:x.vegetableId,
+    name:x.name,
+    price:x.price,
+    quantity:x.quantity,
+    lineTotal:x.price*x.quantity
+  }));
+  const orderData={
+    customerName:name,
+    mobile,
+    address,
+    landmark,
+    items:orderItems,
+    subtotal,
+    deliveryCharge,
+    total,
+    paymentMethod:"COD",
+    status:"Pending",
+    createdAt:new Date().toISOString()
+  };
+
+  const button=$("placeOrder");
+  button.disabled=true;
+  button.textContent="Order place ho raha hai...";
+  try{
+    const result=await addDoc(collection(db,"orders"),orderData);
+    saveLocalAccount({name,mobile,address,landmark});
+    cart={};
+    renderAllProducts();
+    renderCart();
+    updateCartCount();
+    $("checkoutArea").classList.add("hidden");
+    $("ordersList").innerHTML=`
+      <div class="success-box">
+        <h3>✅ Order Successfully Place Ho Gaya!</h3>
+        <div>Order ID: <b>${safe(result.id)}</b></div>
+        <div>Total: <b>${money(total)}</b></div>
+        <div>Payment: Cash on Delivery</div>
+        <div>Status: <b>Pending</b></div>
+      </div>
+      <button class="primary" id="seeMyOrder">My Orders Dekhein</button>`;
+    $("seeMyOrder").addEventListener("click",()=>{
+      $("trackMobile").value=mobile;
+      showPage("orders");
+      startOrderTracking(mobile);
+    });
+    $("trackMobile").value=mobile;
+    showPage("orders");
+    startOrderTracking(mobile);
+    toast("Aapka order place ho gaya!");
+  }catch(error){
+    console.error(error);
+    toast("Order save nahi hua. Internet ya Firebase permission check karein.");
+  }finally{
+    button.disabled=false;
+    button.textContent="Order Place Karein";
+  }
+});
+
+function statusClass(status){
+  const s=String(status||"Pending").toLowerCase();
+  if(s==="delivered")return "delivered";
+  if(s==="confirmed")return "confirmed";
+  return "";
+}
+function renderOrders(docs){
+  const list=$("ordersList");
+  if(!docs.length){
+    list.innerHTML='<div class="empty"><div class="big">📦</div>Is mobile number se koi order nahi mila.</div>';
+    return;
+  }
+  const sorted=[...docs].sort((a,b)=>String(b.data().createdAt||"").localeCompare(String(a.data().createdAt||"")));
+  list.innerHTML=sorted.map(doc=>{
+    const o=doc.data();
+    const status=o.status||"Pending";
+    const date=o.createdAt?new Date(o.createdAt).toLocaleString("en-IN"):"";
+    const items=Array.isArray(o.items)?o.items:[];
+    return `<div class="card order-item">
+      <div class="order-title"><b>Order #${safe(doc.id.slice(-7))}</b><span class="order-status ${statusClass(status)}">${safe(status)}</span></div>
+      <div class="order-meta">Date: ${safe(date)}<br>Payment: ${safe(o.paymentMethod||"COD")}</div>
+      <div style="margin-top:10px">${items.map(i=>`<div class="bill-row"><span>${safe(i.name)} × ${Number(i.quantity||0)}</span><b>${money(i.lineTotal ?? Number(i.price||0)*Number(i.quantity||0))}</b></div>`).join("")}</div>
+      <div class="bill-row bill-total"><span>Total</span><span>${money(o.total)}</span></div>
+      <div class="order-meta">Delivery address: ${safe(o.address||"")}</div>
+    </div>`;
+  }).join("");
+}
+
+function startOrderTracking(mobile){
+  if(unsubscribeOrders){unsubscribeOrders();unsubscribeOrders=null;}
+  currentTrackingMobile=mobile;
+  $("ordersList").innerHTML='<div class="empty">Aapke orders load ho rahe hain...</div>';
+  const q=query(collection(db,"orders"),where("mobile","==",mobile));
+  unsubscribeOrders=onSnapshot(q,snapshot=>{
+    if(currentTrackingMobile!==mobile)return;
+    renderOrders(snapshot.docs);
+  },error=>{
+    console.error(error);
+    $("ordersList").innerHTML='<div class="empty">Orders load nahi ho paaye. Firebase Firestore read permission check karni pad sakti hai.</div>';
+  });
+}
+function trackOrders(){
+  const mobile=$("trackMobile").value.trim();
+  if(!/^\d{10}$/.test(mobile)){toast("10 digit mobile number enter karein.");return;}
+  startOrderTracking(mobile);
+}
+$("trackButton").addEventListener("click",trackOrders);
+$("trackMobile").addEventListener("keydown",e=>{if(e.key==="Enter")trackOrders();});
+
+loadAccountFields();
+updateCartCount();
 loadVegetables();
 </script>
 </body>
