@@ -445,14 +445,16 @@ $("placeOrder").addEventListener("click",async()=>{
  if(address.length<8){toast("Poora delivery address enter karein.");return;}
  const subtotal=cartSubtotal(),deliveryCharge=subtotal<=100?20:0,total=subtotal+deliveryCharge;
  const orderItems=items.map(x=>({vegetableId:x.vegetableId,name:x.name,price:x.price,quantity:x.quantity,lineTotal:x.price*x.quantity}));
- const orderData={customerName:name,mobile,address,landmark,items:orderItems,subtotal,deliveryCharge,total,paymentMethod:"COD",status:"Pending",createdAt:new Date().toISOString()};
+ const paymentMethod=document.querySelector('input[name="paymentMethod"]:checked')?.value||"COD";
+const orderData={customerName:name,mobile,address,landmark,items:orderItems,subtotal,deliveryCharge,total,paymentMethod,paymentStatus:paymentMethod==="Online"?"Payment Link Pending":"Cash on Delivery",status:"Pending",createdAt:new Date().toISOString()};
  const button=$("placeOrder");button.disabled=true;button.textContent="Order place ho raha hai...";
  try{
   const result=await addDoc(collection(db,"orders"),orderData);
   saveLocalAccount({name,mobile,address,landmark});
   cart={};renderAllProducts();renderCart();updateCartCount();
   $("checkoutArea").classList.add("hidden");
-  $("ordersList").innerHTML=`<div class="success-box"><h3>✅ Order Successfully Place Ho Gaya!</h3><div>Order ID: <b>${safe(result.id)}</b></div><div>Total: <b>${money(total)}</b></div><div>Payment: Cash on Delivery</div><div>Status: <b>Pending</b></div></div>`;
+  $("ordersList").innerHTML=`<div class="success-box"><h3>✅ Order Successfully Place Ho Gaya!</h3><div>Order ID: <b>${safe(result.id)}</b></div><div>Total: <b>${money(total)}</b></div> <div>Payment: ${paymentMethod==="Online"?"Online Payment":"Cash on Delivery"}</div>
+<div>Payment Status: <b>${paymentMethod==="Online"?"Payment Link Pending":"Cash on Delivery"}</b></div>   <div>Status: <b>Pending</b></div></div>`;
   $("trackMobile").value=mobile;showPage("orders");startOrderTracking(mobile);toast("Aapka order place ho gaya!");
  }catch(error){console.error(error);toast("Order save nahi hua. Firebase permission check karni pad sakti hai.");}
  finally{button.disabled=false;button.textContent="Order Place Karein";}
