@@ -124,11 +124,25 @@ textarea.field{resize:vertical}
    <button class="secondary" id="getLocation" type="button">📍 Meri current location select karein</button>
    <p class="form-note" id="locationMessage">GPS location select karne ke liye button dabayein.</p>
   </div>
-  <div class="card"><h3>💵 Payment Method</h3>Cash on Delivery (COD)<p class="form-note">Payment delivery ke waqt cash mein hoga.</p></div>
+  
   <button class="primary" id="placeOrder">Order Place Karein</button>
  </div>
 </section>
+<div class="card">
+  <h3>💵 Payment Method</h3>
 
+  <label style="display:flex;align-items:center;gap:10px;padding:12px;border:1px solid #e7ece7;border-radius:10px;margin-bottom:10px">
+    <input type="radio" name="paymentMethod" value="COD" checked>
+    <span>💵 Cash on Delivery (COD)</span>
+  </label>
+
+  <label style="display:flex;align-items:center;gap:10px;padding:12px;border:1px solid #e7ece7;border-radius:10px">
+    <input type="radio" name="paymentMethod" value="Online">
+    <span>📱 Online Payment (UPI, GPay, PhonePe, Paytm)</span>
+  </label>
+
+  <p class="form-note">Online payment ka option select karne par payment ki jaankari milegi.</p>
+</div>
 <section class="page" id="ordersPage">
  <div class="section-head"><h3>📦 My Orders</h3></div>
  <div class="card">
